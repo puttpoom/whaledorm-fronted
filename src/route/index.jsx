@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Container from "../pages/Container";
-import HomePage from "../pages/HomePage";
+import AuthPage from "../pages/AuthPage";
+import RedirectIfAuthenticate from "../features/auth/component/RedirectIfAuthenticate";
 
 const route = createBrowserRouter([
   {
@@ -9,7 +10,7 @@ const route = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HomePage />,
+        element: <AuthPage />,
       },
     ],
   },

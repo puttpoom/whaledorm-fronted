@@ -1,15 +1,15 @@
 import Joi from "joi";
-import validate from "../../../utils/validate";
+import validate from "../../../utills/validate";
 
 const registerSchema = Joi.object({
   firstName: Joi.string()
     .required()
     .trim()
-    .messages({ "string.empty": "first name is required naja" }), //*for customize message string.empty is error.detail.type
+    .messages({ "string.empty": "first name is required" }), //*for customize message string.empty is error.detail.type
   lastName: Joi.string()
     .required()
     .trim()
-    .messages({ "string.empty": "last name is required naja" }),
+    .messages({ "string.empty": "last name is required" }),
   email: Joi.string().email({ tlds: false }).required().messages({
     "alternatives.match": "invalid format Email or Mobile number",
   }), //top level domain
