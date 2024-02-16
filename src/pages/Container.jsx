@@ -6,8 +6,7 @@ import { Outlet } from "react-router-dom"; //! for others components
 
 const Container = () => {
   const { isOpenLoginForm, isOpenRegisterForm, authUser } = useAuth();
-  console.log("OpenLogInForm", isOpenLoginForm);
-  console.log("authUser", authUser);
+  console.log(authUser);
   return (
     <div className="grid">
       <Header />
