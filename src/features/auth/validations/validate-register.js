@@ -22,6 +22,11 @@ const registerSchema = Joi.object({
       "string.pattern.base":
         "password must be at least 6 characters and contain alphabet only",
     }),
+
+  role: Joi.string()
+    .valid("USER", "DORM")
+    .required()
+    .messages({ "string.empty": "role is required" }),
   //minimun 6
   //   confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
   //     "any.only": "password and confirm-password did not match",

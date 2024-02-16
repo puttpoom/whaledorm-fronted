@@ -11,9 +11,11 @@ const Container = () => {
   return (
     <div className="grid">
       <Header />
+
       {!authUser && isOpenRegisterForm && isOpenLoginForm === false && (
         <RegisterForm />
       )}
+
       {isOpenLoginForm && !authUser && <LoginForm />}
       <Outlet />
     </div>

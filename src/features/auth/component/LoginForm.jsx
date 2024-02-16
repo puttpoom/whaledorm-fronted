@@ -110,15 +110,18 @@ export default function LoginForm() {
           <Button color="blue" text="white" width="full">
             ลงชื่อเข้าใช้
           </Button>
-          <div
-            onClick={(e) => {
-              setIsOpenRegisterForm(true);
-              setIsOpenLoginForm(false);
-            }}
-            className="underline text-blue-500 text-sm"
-            role="button"
-          >
-            สร้างบัญชีผู้ใช้
+          <div className="flex text-sm gap-2">
+            <div className="text-gray-400">ยังไม่มีบัญชีผู้ใช้ ?</div>
+            <div
+              onClick={(e) => {
+                setIsOpenRegisterForm(true);
+                setIsOpenLoginForm(false);
+              }}
+              className="underline text-blue-500 text-sm"
+              role="button"
+            >
+              สร้างบัญชีผู้ใช้
+            </div>
           </div>
         </div>
       </div>

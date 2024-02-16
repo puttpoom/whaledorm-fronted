@@ -1,3 +1,6 @@
+//icon
+import { Building, User } from "lucide-react";
+
 //components
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
@@ -16,6 +19,7 @@ const initial = {
   firstName: "",
   lastName: "",
   password: "",
+  role: "",
 };
 
 export default function RegisterForm() {
@@ -23,7 +27,12 @@ export default function RegisterForm() {
   const [input, setInput] = useState(initial);
   const [error, setError] = useState(initial);
 
-  const { register, isOpenRegisterForm, setIsOpenRegisterForm } = useAuth();
+  const {
+    register,
+    isOpenRegisterForm,
+    setIsOpenRegisterForm,
+    setIsOpenLoginForm,
+  } = useAuth();
 
   useEffect(() => {
     if (isOpenRegisterForm) {
@@ -74,7 +83,7 @@ export default function RegisterForm() {
     >
       <div
         ref={registerFormEl}
-        className="bg-white shadow-[0_0_15px_rgb(0,0,0,0.2)] rounded-md w-[560px] px-12 py-8 flex flex-col gap-4 content-center"
+        className=" bg-white shadow-[0_0_15px_rgb(0,0,0,0.2)] rounded-md w-[560px] px-12 py-8 flex flex-col gap-4 content-center"
       >
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-bold">สร้างบัญชีผู้ใช้</h2>
@@ -91,7 +100,7 @@ export default function RegisterForm() {
           <div>
             <div className="flex justify-between">
               <span>รหัสผ่าน</span>
-              <span className="text-sm text-blue-500">ลืมรหัสผ่าน?</span>
+              {/* <span className="text-sm text-blue-500">ลืมรหัสผ่าน?</span> */}
             </div>
             <Input
               name="password"
@@ -122,18 +131,53 @@ export default function RegisterForm() {
               <ErrorText message={error.lastName} />
             </div>
           </div>
-          <div>
+          <div className="grid grid-cols-2 gap-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="role"
+                value="USER"
+                checked={input.role === "USER"}
+                onChange={handleChangeInput}
+              />
+              <User size={20} className="inline mx-1" />
+              ผู้ใช้งานทั่วไป
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="role"
+                value="DORM"
+                checked={input.role === "DORM"}
+                onChange={handleChangeInput}
+              />
+              <Building size={20} className="inline mx-1" />
+              หอพัก
+            </label>
+            <ErrorText message={error.role} />
+          </div>
+          <div className="grid gap-2">
             <Button color="blue" text="white" width="full">
               สร้างบัญชีผู้ใช้
             </Button>
+            {/* <Button color="blue" text="white" width="full">
+              ลงทะเบียนหอพัก
+            </Button> */}
           </div>
           <div className="flex gap-2 justify-center">
             <span className="text-sm text-gray-400">
               มีบัญชีผู้ใช้อยู่แล้ว?
             </span>
-            <span className="text-sm text-blue-500 underline">
+            <div
+              onClick={(e) => {
+                setIsOpenRegisterForm(false);
+                setIsOpenLoginForm(true);
+              }}
+              role="button"
+              className="text-sm text-blue-500 underline"
+            >
               ลงชื่อเข้าใช้
-            </span>
+            </div>
           </div>
         </div>
       </div>
