@@ -1,45 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FarFormLable from "./FarFormLable";
 import VacantRoomLable from "./VacantRoomLable";
 import { BadgeCheck, DoorOpen } from "lucide-react";
 
 const mockData = {
-  imgUrl:
+  dormImages:
     "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800",
-  title: "หอพัก S9",
-  distance: "ห่างออกไป 4.4 กม.",
-  address: "ซ.วงศ์สว่าง 11 กรุงเทพ บางซื่อ",
-  vancantNumbers: "มีห้องว่างจำนวน 3 ห้อง",
-  createdAt: "ประกาศเมื่อวันที่ 16 ก.พ. 2567",
-  priceRating: "2,800 - 5,000 / เดือน",
+  dormName: "หอพัก",
+  distance: "ห่างออกไป 0 กม.",
+  location: "ที่อยู่",
+  vancantNumbers: "มีห้องว่างจำนวน 0 ห้อง",
+  createdAt: "ประกาศล่าสุดเมื่อ",
+  priceRating: "0 บาท/เดือน",
 };
 
-export default function DormCard() {
+export default function DormCard({ dorm, max, min }) {
+  console.log({ dorm });
   return (
-    <div className="grid  grid-cols-[2fr_8fr] gap-2 bg-white shadow-[0_1px_5px_rgb(0,0,0,0.1)] rounded-xl overflow-hidden">
-      <img
-        src={mockData.imgUrl}
-        alt="imgRoom"
-        className="object-cover w-full h-full"
-      />
-      <div className="grid grid-rows-4 items-center gap-[8px] p-4">
-        <div className="text-[24px] font-semibold flex gap-2 items-center">
-          <BadgeCheck color="#22d3ee" />
-          {mockData.title}
-        </div>
-        <div className="flex items-center gap-2">
-          <FarFormLable>{mockData.distance}</FarFormLable>
-          <span>{mockData.address}</span>
-        </div>
-        <div className="inline-flex gap-2 items-center">
-          <VacantRoomLable bgColor="green">
-            <DoorOpen className="inline mr-1" size={20} />
-            {mockData.vancantNumbers}
-          </VacantRoomLable>
-          <span className="text-sm text-gray-600">{mockData.createdAt}</span>
-        </div>
-        <div className="text-red-500 font-bold text-[20px]">
-          {mockData.priceRating}
+    <div className="grid grid-cols px-8 py-2 w-[80vw] justify-self-center">
+      <div className="grid grid-cols-[3fr_7fr] gap-2 bg-white shadow-[0_1px_5px_rgb(0,0,0,0.1)] rounded-xl overflow-hidden">
+        <img
+          src={dorm.dormImages ? dorm.dormImages : mockData.dormImages}
+          alt="imgRoom"
+          className="object-center w-full h-[200px]"
+        />
+        <div className="grid grid-rows-4 items-center gap-[8px] p-4">
+          <div className="text-[24px] font-semibold flex gap-2 items-center">
+            <BadgeCheck color="#22d3ee" />
+            {dorm.dormName || mockData.title}
+          </div>
+          <div className="flex items-center gap-2">
+            <FarFormLable>
+              ห่างออกไป {dorm.distance || mockData.distance} กม.
+            </FarFormLable>
+            <span>{dorm.location || mockData.location}</span>
+          </div>
+          <div className="inline-flex gap-2 items-center">
+            <VacantRoomLable bgColor="green">
+              <DoorOpen className="inline mr-1" size={20} />
+              มีห้องว่างจำนวน {dorm.totalVacantRoom ||
+                mockData.vancantNumbers}{" "}
+              ห้อง
+            </VacantRoomLable>
+            <span className="text-sm text-gray-600">
+              {dorm.createdAt || mockData.createdAt}
+            </span>
+          </div>
+          <div className="text-red-500 font-bold text-[20px]">
+            {min(dorm.room)}{" "}
+            {dorm.room.length > 1 ? "-" + " " + max(dorm.room) : null} บาท/เดือน
+          </div>
         </div>
       </div>
     </div>

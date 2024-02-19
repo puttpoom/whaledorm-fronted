@@ -5,11 +5,12 @@ import {
   storeToken,
   clearToken,
 } from "../../../utills/local-storage";
+import MySwal from "../../../utills/sweetaleart";
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState("");
   const [initialLoading, setInitialLoading] = useState(true);
 
   const [isOpenRegisterForm, setIsOpenRegisterForm] = useState(false);
@@ -41,17 +42,41 @@ export default function AuthContextProvider({ children }) {
     setAuthUser(res.data.newUser);
     console.log(res.data.newUser);
     storeToken(res.data.accessToken);
+
+    MySwal.fire({
+      position: "center",
+      icon: "success",
+      title: "ลงทะเบียนสำเร็จ",
+      showConfirmButton: false,
+      timer: 2000,
+    });
   };
 
   const login = async (credential) => {
     const res = await authApi.login(credential);
     setAuthUser(res.data.user);
     storeToken(res.data.accessToken);
+
+    MySwal.fire({
+      position: "center",
+      icon: "success",
+      title: "ล็อกอินสำเร็จ",
+      showConfirmButton: false,
+      timer: 2000,
+    });
   };
 
   const logout = () => {
-    setAuthUser(null);
+    setAuthUser("");
     clearToken();
+
+    MySwal.fire({
+      position: "center",
+      icon: "success",
+      title: "ออกจากระบบสำเร็จ",
+      showConfirmButton: false,
+      timer: 2000,
+    });
   };
 
   return (

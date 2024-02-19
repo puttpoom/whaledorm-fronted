@@ -9,6 +9,7 @@ import Button from "../components/Button";
 
 //custom-hook
 import useAuth from "../hooks/use-auth";
+import { Link, Navigate } from "react-router-dom";
 
 export default function Header() {
   const { authUser, initialLoading, logout, setIsOpenLoginForm } = useAuth();
@@ -18,7 +19,7 @@ export default function Header() {
       <img src={logoImg} className="hidden md:block" />
       <div className="flex gap-8 items-center min-w-4">
         <div className="flex gap-6">
-          <div>หน้าแรก</div>
+          <Link to="/">หน้าแรก</Link>
           <div>หอพัก</div>
           <div>เกี่ยวกับเรา</div>
         </div>
@@ -29,15 +30,15 @@ export default function Header() {
             text="sm"
             outline="outline outline-red-600"
           >
-            ลงประกาศห้องพัก ฟรี!
+            <Link to="/dorm">ลงประกาศห้องพัก ฟรี!</Link>
           </Button>
           {authUser ? (
             <div className="flex text-blue-900 items-center gap-2">
               สวัสดีคุณ
               <span className="font-semibold">{authUser.firstName}</span>
-              <span role="button" onClick={(e) => logout()}>
+              <Link to="/" role="button" onClick={(e) => logout()}>
                 <LogOut size={20} />
-              </span>
+              </Link>
             </div>
           ) : (
             <Button

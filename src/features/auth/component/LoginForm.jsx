@@ -13,6 +13,7 @@ import ErrorText from "../component/ErrorText";
 
 //middleWares
 import validateLogin from "../validations/validate-login";
+import MySwal from "../../../utills/sweetaleart";
 
 const initial = {
   email: "",
@@ -56,12 +57,22 @@ export default function LoginForm() {
       }
       await login(input);
       setIsOpenLoginForm(false);
-      // toast.success("Login successfully");
       console.log("Login successfully");
     } catch (err) {
-      // toast.error(err.response?.data.message);
       console.log(err);
+
+      MySwal.fire({
+        position: "center",
+        icon: "error",
+        title: `${err?.response.data.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
+  };
+
+  const handleShowPassword = (e) => {
+    setIsShowPassword((prv) => !prv);
   };
 
   return (
@@ -98,7 +109,7 @@ export default function LoginForm() {
             <span
               role="button"
               className="absolute right-3 bottom-3"
-              onClick={(e) => setIsShowPassword((prv) => !prv)}
+              onClick={handleShowPassword}
             >
               {isShowPassword ? <Eye size={16} /> : <EyeOff size={16} />}
             </span>

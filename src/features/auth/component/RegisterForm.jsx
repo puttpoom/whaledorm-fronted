@@ -1,5 +1,5 @@
 //icon
-import { Building, User } from "lucide-react";
+import { Building, User, Eye, EyeOff } from "lucide-react";
 
 //components
 import Button from "../../../components/Button";
@@ -26,6 +26,7 @@ export default function RegisterForm() {
   const registerFormEl = useRef(null);
   const [input, setInput] = useState(initial);
   const [error, setError] = useState(initial);
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   const {
     register,
@@ -76,6 +77,10 @@ export default function RegisterForm() {
     setError(initial);
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+
+  const handleShowPassword = (e) => {
+    setIsShowPassword((prv) => !prv);
+  };
   return (
     <form
       onSubmit={handleSubmitForm}
@@ -87,30 +92,6 @@ export default function RegisterForm() {
       >
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-bold">สร้างบัญชีผู้ใช้</h2>
-          <div>
-            <span>อีเมล</span>
-            <Input
-              name="email"
-              value={input.email}
-              placeholder="example@email.com"
-              onChange={handleChangeInput}
-            />
-            <ErrorText message={error.email} />
-          </div>
-          <div>
-            <div className="flex justify-between">
-              <span>รหัสผ่าน</span>
-              {/* <span className="text-sm text-blue-500">ลืมรหัสผ่าน?</span> */}
-            </div>
-            <Input
-              name="password"
-              type="password"
-              value={input.password}
-              onChange={handleChangeInput}
-              placeholder="กรอกรหัสผ่านของคุณ"
-            />
-            <ErrorText message={error.password} />
-          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <span>ชื่อ</span>
@@ -131,8 +112,41 @@ export default function RegisterForm() {
               <ErrorText message={error.lastName} />
             </div>
           </div>
+          <div>
+            <span>อีเมล</span>
+            <Input
+              name="email"
+              value={input.email}
+              placeholder="example@email.com"
+              onChange={handleChangeInput}
+            />
+            <ErrorText message={error.email} />
+          </div>
+          <div>
+            <div className="flex justify-between">
+              <span>รหัสผ่าน</span>
+              {/* <span className="text-sm text-blue-500">ลืมรหัสผ่าน?</span> */}
+            </div>
+            <div className="relative">
+              <Input
+                name="password"
+                type={isShowPassword ? "text" : "password"}
+                value={input.password}
+                onChange={handleChangeInput}
+                placeholder="กรอกรหัสผ่านของคุณ"
+              />
+              <span
+                role="button"
+                className="absolute right-3 bottom-3"
+                onClick={handleShowPassword}
+              >
+                {isShowPassword ? <Eye size={16} /> : <EyeOff size={16} />}
+              </span>
+            </div>
+            <ErrorText message={error.password} />
+          </div>
           <div className="grid grid-cols-2 gap-4">
-            <label className="flex items-center">
+            <p className="flex items-center">
               <input
                 type="radio"
                 name="role"
@@ -142,8 +156,8 @@ export default function RegisterForm() {
               />
               <User size={20} className="inline mx-1" />
               ผู้ใช้งานทั่วไป
-            </label>
-            <label className="flex items-center">
+            </p>
+            <p className="flex items-center">
               <input
                 type="radio"
                 name="role"
@@ -153,16 +167,28 @@ export default function RegisterForm() {
               />
               <Building size={20} className="inline mx-1" />
               หอพัก
-            </label>
+            </p>
             <ErrorText message={error.role} />
           </div>
-          <div className="grid gap-2">
+
+          {/* <div>
+            {input.role === "DORM" ? (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label>ชื่อหอพัก</label>
+                  <Input />
+                </div>
+                <div>
+                  <label>เบอร์โทร</label>
+                  <Input />
+                </div>
+              </div>
+            ) : null}
+          </div> */}
+          <div className="grid">
             <Button color="blue" text="white" width="full">
               สร้างบัญชีผู้ใช้
             </Button>
-            {/* <Button color="blue" text="white" width="full">
-              ลงทะเบียนหอพัก
-            </Button> */}
           </div>
           <div className="flex gap-2 justify-center">
             <span className="text-sm text-gray-400">

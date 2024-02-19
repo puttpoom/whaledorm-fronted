@@ -1,11 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Container from "../pages/Container";
-// import RedirectIfAuthenticate from "../features/auth/component/RedirectIfAuthenticate";
+import RedirectIfAuthenticate from "../features/auth/component/RedirectIfAuthenticate";
 import HomePage from "../pages/HomePage";
-import DormPage from "../features/dorm/components/DormPage";
+import DormPage from "../pages/DormPage";
 import ProtectedRouteDorm from "../features/dorm/components/ProtectedRouteDorm";
 
 const route = createBrowserRouter([
+  {
+    path: "/",
+    element: <Container />,
+    children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+    ],
+  },
   {
     path: "/dorm",
     element: (
