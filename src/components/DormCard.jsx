@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import FarFormLable from "./FarFormLable";
 import VacantRoomLable from "./VacantRoomLable";
 import { BadgeCheck, DoorOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const mockData = {
   dormImages:
@@ -14,11 +15,13 @@ const mockData = {
   priceRating: "0 บาท/เดือน",
 };
 
-export default function DormCard({ dorm, max, min }) {
-  console.log({ dorm });
+export default function DormCard({ dorm, max, min, onClick }) {
   return (
     <div className="grid grid-cols px-8 py-2 w-[80vw] justify-self-center">
-      <div className="grid grid-cols-[3fr_7fr] gap-2 bg-white shadow-[0_1px_5px_rgb(0,0,0,0.1)] rounded-xl overflow-hidden">
+      <div
+        onClick={(e) => console.log(dorm.id)}
+        className="grid grid-cols-[3fr_7fr] gap-2 bg-white shadow-[0_1px_5px_rgb(0,0,0,0.1)] rounded-xl overflow-hidden"
+      >
         <img
           src={dorm.dormImages ? dorm.dormImages : mockData.dormImages}
           alt="imgRoom"

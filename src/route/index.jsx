@@ -4,6 +4,7 @@ import RedirectIfAuthenticate from "../features/auth/component/RedirectIfAuthent
 import HomePage from "../pages/HomePage";
 import DormPage from "../pages/DormPage";
 import ProtectedRouteDorm from "../features/dorm/components/ProtectedRouteDorm";
+import DormRoomPage from "../pages/DormRoomPage";
 
 const route = createBrowserRouter([
   {
@@ -14,10 +15,15 @@ const route = createBrowserRouter([
         path: "",
         element: <HomePage />,
       },
+      {
+        path: "dorm/room/:targetDormId",
+        element: <DormRoomPage />,
+      },
     ],
   },
+
   {
-    path: "/dorm",
+    path: "/app/dorm",
     element: (
       <ProtectedRouteDorm>
         <Container />

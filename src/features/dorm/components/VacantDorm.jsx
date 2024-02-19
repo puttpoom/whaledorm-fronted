@@ -1,9 +1,14 @@
+import { Link } from "react-router-dom";
 import DormCard from "../../../components/DormCard";
 import useDorm from "../../../hooks/use-dorm";
 
 export default function VacantDorm() {
   const { vacantDorms, calculateMinPrice, calculateMaxPrice } = useDorm();
   console.log(vacantDorms);
+
+  const handleOnClickLinktoDorm = (dormId) => (
+    <Link to={`/dorm/room/:${dormId}`} />
+  );
 
   return (
     <>
@@ -13,6 +18,7 @@ export default function VacantDorm() {
           dorm={dorm}
           max={calculateMaxPrice}
           min={calculateMinPrice}
+          onClick={handleOnClickLinktoDorm}
         />
       ))}
     </>

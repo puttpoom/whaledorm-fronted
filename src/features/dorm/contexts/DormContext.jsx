@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import * as dormApi from "../../../api/dorm";
+import { useParams } from "react-router-dom";
 
 export const DormContext = createContext();
 
@@ -32,19 +33,41 @@ const initialRoom = {
 
 export default function DormContextProvider({ children }) {
   const [vacantDorms, setVacantDorms] = useState([]);
-  const [authDorm, setAuthDorm] = useState(initialDorm);
-  const [room, setRoom] = useState(initialRoom);
+  const [registeredDorm, setRegisteredDorm] = useState(initialDorm);
+
+  const { targetDormId } = useParams();
 
   useEffect(() => {
-    dormApi
-      .getAllVacantDorm()
-      .then((res) => setVacantDorms(res.data))
-      .catch((err) => console.log(err));
+    const fetchAllVacantRoom = async () => {
+      try {
+        const res = await dormApi
+          .getAllVacantDorm()
+          .then((res) => setVacantDorms(res.data))
+          .catch((err) => console.log(err));
+        // console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllVacantRoom();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchDormByDormId = async () => {
+  //     try {
+  //       const res = await dormApi.getDormByDormId(targetDormId);
+  //       console.log(res);
+  //       setDormRoom(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchDormByDormId();
+  // }, [targetDormId]); //prevent useParams undefeind first render
 
   const registerDorm = async (dorm) => {
     const res = await dormApi.registerDorm(dorm);
-    setAuthDorm(res.data.newDorm);
+    setRegisteredDorm(res.data.newDorm);
     console.log(res.data.newDorm);
     storeToken(res.data.accessToken);
 
@@ -71,7 +94,7 @@ export default function DormContextProvider({ children }) {
     <DormContext.Provider
       value={{
         vacantDorms,
-        authDorm,
+        registeredDorm,
         registerDorm,
         calculateMinPrice,
         calculateMaxPrice,
