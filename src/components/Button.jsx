@@ -1,6 +1,8 @@
 const bgClasses = {
   blue: "bg-blue-900",
   red: "bg-white",
+  green: "bg-green-500",
+  red2: "bg-red-600",
 };
 
 const textClasses = {

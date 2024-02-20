@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import * as dormApi from "../../../api/dorm";
 import { useParams } from "react-router-dom";
+import Spinner from "../../../components/Spinner";
 
 export const DormContext = createContext();
 
@@ -34,11 +35,13 @@ const initialRoom = {
 export default function DormContextProvider({ children }) {
   const [vacantDorms, setVacantDorms] = useState([]);
   const [registeredDorm, setRegisteredDorm] = useState(initialDorm);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const { targetDormId } = useParams();
 
   useEffect(() => {
     const fetchAllVacantRoom = async () => {
+      if (initialLoading) return <Spinner />;
       try {
         const res = await dormApi
           .getAllVacantDorm()
@@ -50,20 +53,8 @@ export default function DormContextProvider({ children }) {
       }
     };
     fetchAllVacantRoom();
-  }, []);
-
-  // useEffect(() => {
-  //   const fetchDormByDormId = async () => {
-  //     try {
-  //       const res = await dormApi.getDormByDormId(targetDormId);
-  //       console.log(res);
-  //       setDormRoom(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchDormByDormId();
-  // }, [targetDormId]); //prevent useParams undefeind first render
+    setInitialLoading(false);
+  }, [initialLoading]);
 
   const registerDorm = async (dorm) => {
     const res = await dormApi.registerDorm(dorm);
@@ -90,6 +81,20 @@ export default function DormContextProvider({ children }) {
     return maxPrice.toLocaleString();
   };
 
+  // const findNewestCreatedAt = (createdAts) => {
+  //   const newestDate = new Date(0);
+
+  // };
+
+  const findNewestCreatedAt = (data) => {
+    const newestCreatedAt = data.reduce((maxDate, currentRoom) => {
+      const currentDate = new Date(currentRoom.createdAt);
+      return currentDate > maxDate ? currentDate : maxDate;
+    }, new Date(0)); // Initialize with a minimum date
+
+    return newestCreatedAt;
+  };
+
   return (
     <DormContext.Provider
       value={{
@@ -98,6 +103,7 @@ export default function DormContextProvider({ children }) {
         registerDorm,
         calculateMinPrice,
         calculateMaxPrice,
+        findNewestCreatedAt,
       }}
     >
       {children}

@@ -6,21 +6,19 @@ export default function VacantDorm() {
   const { vacantDorms, calculateMinPrice, calculateMaxPrice } = useDorm();
   console.log(vacantDorms);
 
-  const handleOnClickLinktoDorm = (dormId) => (
-    <Link to={`/dorm/room/:${dormId}`} />
-  );
-
   return (
     <>
-      {vacantDorms.map((dorm, index) => (
-        <DormCard
-          key={index}
-          dorm={dorm}
-          max={calculateMaxPrice}
-          min={calculateMinPrice}
-          onClick={handleOnClickLinktoDorm}
-        />
-      ))}
+      {/* //* TIPs sorting newest by flex-...-reverse */}
+      <div className="flex flex-col-reverse items-center py-10">
+        {vacantDorms.map((dorm, index) => (
+          <DormCard
+            key={index}
+            dorm={dorm}
+            max={calculateMaxPrice}
+            min={calculateMinPrice}
+          />
+        ))}
+      </div>
     </>
   );
 }

@@ -16,14 +16,14 @@ const route = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "dorm/room/:targetDormId",
+        path: "dorm/rooms/:targetDormId",
         element: <DormRoomPage />,
       },
     ],
   },
 
   {
-    path: "/app/dorm",
+    path: "/dorm",
     element: (
       <ProtectedRouteDorm>
         <Container />

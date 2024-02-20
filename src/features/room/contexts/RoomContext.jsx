@@ -21,7 +21,8 @@ export default function RoomContextProvider({ children }) {
     fetchDormByDormId();
   }, [targetDormId]); //prevent useParams undefeind first render
 
+  console.log(dormRoom);
   return (
-    <RoomContext.Provider value={dormRoom}>{children}</RoomContext.Provider>
+    <RoomContext.Provider value={{ dormRoom }}>{children}</RoomContext.Provider>
   );
 }
