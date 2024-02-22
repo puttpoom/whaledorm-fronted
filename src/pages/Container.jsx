@@ -5,23 +5,21 @@ import useAuth from "../hooks/use-auth";
 import Header from "../layouts/Header";
 import { Outlet } from "react-router-dom"; //! for others components
 
-const Container = () => {
+export default function Container() {
   const { isOpenLoginForm, isOpenRegisterForm, authUser } = useAuth();
   // console.log(authUser);
   return (
-    <RoomContextProvider>
-      <div className="grid">
-        <Header />
+    <div className="relative">
+      <Header />
 
-        {!authUser && isOpenRegisterForm && isOpenLoginForm === false && (
-          <RegisterForm />
-        )}
+      {!authUser && isOpenRegisterForm && isOpenLoginForm === false && (
+        <RegisterForm />
+      )}
 
-        {isOpenLoginForm && !authUser && <LoginForm />}
+      {isOpenLoginForm && !authUser && <LoginForm />}
+      <RoomContextProvider>
         <Outlet />
-      </div>
-    </RoomContextProvider>
+      </RoomContextProvider>
+    </div>
   );
-};
-
-export default Container;
+}

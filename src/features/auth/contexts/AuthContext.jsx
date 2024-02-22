@@ -21,20 +21,23 @@ export default function AuthContextProvider({ children }) {
     // const fetch = async () => {
     //   const res = await authApi.fetchMe();
     // };
-    if (getToken()) {
-      authApi
-        .fetchMe()
-        .then((res) => {
-          setAuthUser(res.data.user);
-        })
-        .catch((err) => {
-          console.log(err.response?.data.message);
-          //toast.error(err.response?.data.message);
-        })
-        .finally(() => setInitialLoading(false));
-    } else {
-      setInitialLoading(false);
-    }
+    const fetchAuth = async () => {
+      if (getToken()) {
+        await authApi
+          .fetchMe()
+          .then((res) => {
+            setAuthUser(res.data.user);
+          })
+          .catch((err) => {
+            console.log(err.response?.data.message);
+            //toast.error(err.response?.data.message);
+          })
+          .finally(() => setInitialLoading(false));
+      } else {
+        setInitialLoading(false);
+      }
+    };
+    fetchAuth();
   }, []);
 
   const register = async (user) => {

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import DormCard from "../../../components/DormCard";
 import useDorm from "../../../hooks/use-dorm";
 

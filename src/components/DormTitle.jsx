@@ -14,20 +14,19 @@ const mockData = {
 };
 
 export default function DormTitle() {
-  const { dormRoom } = useRoom() || {};
-  const dorm = dormRoom;
-
+  const { dormRoom } = useRoom();
+  console.log(dormRoom);
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <div className="text-[24px] font-semibold flex gap-2 items-center">
-        <BadgeCheck color="#22d3ee" />
-        {dorm.dormName || mockData.title}
+        {dormRoom.isVerify === "VERIFY" ? <BadgeCheck color="#22d3ee" /> : null}
+        {dormRoom.dormName || mockData.title}
       </div>
       <div className="flex items-center gap-2">
         <FarFormLable>
-          ห่างออกไป {dorm.distance || mockData.distance} กม.
+          ห่างออกไป {dormRoom.distance || mockData.distance} กม.
         </FarFormLable>
-        <span>{dorm.location || mockData.location}</span>
+        <span>{dormRoom.location || mockData.location}</span>
       </div>
     </div>
   );

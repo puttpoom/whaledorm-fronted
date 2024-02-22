@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 //icon & img
 import { LogIn, LogOut } from "lucide-react";
 import logoImg from "../assets/img/logo.png";
@@ -9,14 +7,33 @@ import Button from "../components/Button";
 
 //custom-hook
 import useAuth from "../hooks/use-auth";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Header() {
-  const { authUser, initialLoading, logout, setIsOpenLoginForm } = useAuth();
+  const { authUser, logout, setIsOpenLoginForm } = useAuth();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > (0 * window.innerHeight) / 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <header className="flex bg-white shadow-md justify-between px-24 py-2">
-      <img src={logoImg} className="hidden md:block" />
+    <header
+      className={`flex bg-white shadow-md justify-between px-24 py-2 w-full ${
+        isScrolled ? "sticky top-0" : ""
+      }`}
+    >
+      <img src={logoImg} className="hidden md:block w-48 h-auto" />
       <div className="flex gap-8 items-center min-w-4">
         <div className="flex gap-6">
           <Link to="/">หน้าแรก</Link>

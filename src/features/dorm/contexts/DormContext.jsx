@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import * as dormApi from "../../../api/dorm";
-import { useParams } from "react-router-dom";
 import Spinner from "../../../components/Spinner";
 
 export const DormContext = createContext();
@@ -37,19 +36,13 @@ export default function DormContextProvider({ children }) {
   const [registeredDorm, setRegisteredDorm] = useState(initialDorm);
   const [initialLoading, setInitialLoading] = useState(true);
 
-  const { targetDormId } = useParams();
-
   useEffect(() => {
     const fetchAllVacantRoom = async () => {
-      if (initialLoading) return <Spinner />;
       try {
-        const res = await dormApi
-          .getAllVacantDorm()
-          .then((res) => setVacantDorms(res.data))
-          .catch((err) => console.log(err));
-        // console.log(res);
-      } catch (err) {
-        console.log(err);
+        const res = await dormApi.getAllVacantDorm();
+        setVacantDorms(res.data);
+      } catch (error) {
+        console.log(error);
       }
     };
     fetchAllVacantRoom();
@@ -83,7 +76,6 @@ export default function DormContextProvider({ children }) {
 
   // const findNewestCreatedAt = (createdAts) => {
   //   const newestDate = new Date(0);
-
   // };
 
   const findNewestCreatedAt = (data) => {
