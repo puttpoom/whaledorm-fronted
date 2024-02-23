@@ -17,9 +17,8 @@ export default function Container() {
       )}
 
       {isOpenLoginForm && !authUser && <LoginForm />}
-      <RoomContextProvider>
-        <Outlet />
-      </RoomContextProvider>
+
+      <Outlet />
     </div>
   );
 }

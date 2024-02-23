@@ -3,7 +3,7 @@ import { CalendarFold } from "lucide-react";
 import { Link } from "react-router-dom";
 import RoomFacilities from "./RoomFacilities";
 
-export default function RoomCard({ rooms }) {
+export default function RoomCard({ rooms, isShowBtn = true }) {
   // const navigate = useNavigate();
   // const handleOnClickLinkToAppointmentPageByRoomId = (roomId) => {
   //   return navigate(`/dorm/rooms/appointment/${roomId}`);
@@ -36,17 +36,19 @@ export default function RoomCard({ rooms }) {
           {formatPrice(rooms.price)} บาท/เดือน
         </span>
         <span className="flex w-[15vw] justify-center items-center">
-          <Link to={`/appointment/${rooms.id}`}>
-            <Button
-              color="bookBtn"
-              text="white"
-              textSize="sm"
-              width="full"
-              className="w-[20vw]"
-            >
-              นัดเวลาดูห้องพักนี้
-              <CalendarFold size={18} />
-            </Button>
+          <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
+            {isShowBtn ? (
+              <Button
+                color="bookBtn"
+                text="white"
+                textSize="sm"
+                width="full"
+                className="w-[20vw]"
+              >
+                นัดเวลาดูห้องพักนี้
+                <CalendarFold size={18} />
+              </Button>
+            ) : null}
           </Link>
         </span>
       </div>

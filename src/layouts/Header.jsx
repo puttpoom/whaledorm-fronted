@@ -37,7 +37,12 @@ export default function Header() {
       <div className="flex gap-8 items-center min-w-4">
         <div className="flex gap-6">
           <Link to="/">หน้าแรก</Link>
-          <div>หอพัก</div>
+          {authUser && authUser.role === "DORM" ? (
+            <Link to="/dorm/appointments">รายการนัดหมาย</Link>
+          ) : null}
+          {authUser && authUser.role === "USER" ? (
+            <Link to="/dorm/appointments">รายการนัดหมายของฉัน</Link>
+          ) : null}
           <div>เกี่ยวกับเรา</div>
         </div>
         <div className="flex gap-3">

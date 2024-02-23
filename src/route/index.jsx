@@ -6,6 +6,7 @@ import DormPage from "../pages/DormPage";
 import ProtectedRouteDorm from "../features/dorm/components/ProtectedRouteDorm";
 import DormRoomPage from "../pages/DormRoomPage";
 import AppointmetPage from "../pages/AppointmetPage";
+import AllAppointmentPage from "../pages/AllAppointmentPage";
 
 const route = createBrowserRouter([
   {
@@ -17,39 +18,43 @@ const route = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "dorm/:targetDormId",
+        path: "dorm/rooms/:targetDormId",
         element: <DormRoomPage />,
       },
       {
-        path: "appointment/:targetRoomId",
+        path: "dorm/rooms/appointment/:targetRoomId",
         element: <AppointmetPage />,
       },
     ],
   },
-  // {
-  //   path: "/",
-  //   element: <Container />,
-  //   children: [
-  //     {
-  //       path: "appointment/:targetRoomId",
-  //       element: <AppointmetPage />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "/dorm",
-  //   element: (
-  //     <ProtectedRouteDorm>
-  //       <Container />
-  //     </ProtectedRouteDorm>
-  //   ),
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <DormPage />,
-  //     },
-  //   ],
-  // },
+  {
+    path: "/",
+    element: <Container />,
+    children: [
+      {
+        path: "dorm",
+        element: <DormPage />,
+      },
+    ],
+  },
+  {
+    path: "/dorm",
+    element: (
+      <ProtectedRouteDorm>
+        <Container />
+      </ProtectedRouteDorm>
+    ),
+    children: [
+      {
+        path: "",
+        element: <DormPage />,
+      },
+      {
+        path: "appointments",
+        element: <AllAppointmentPage />,
+      },
+    ],
+  },
 ]);
 
 export default function Router() {

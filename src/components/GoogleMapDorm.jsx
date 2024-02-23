@@ -1,8 +1,8 @@
 import React from "react";
-import { GoogleMap, LoadScript, Circle } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import useRoom from "../hooks/use-room";
 
-const GoogleMapFrame = () => {
+const GoogleMapDorm = () => {
   const { latLong } = useRoom();
   console.log(latLong);
   const lat = +latLong.split(",")[0];
@@ -20,22 +20,12 @@ const GoogleMapFrame = () => {
       <GoogleMap
         mapContainerStyle={{ height: "400px", width: "100%" }}
         center={center}
-        zoom={15}
+        zoom={19}
       >
-        <Circle
-          center={center}
-          radius={radius}
-          options={{
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.5,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.2,
-          }}
-        />
+        <Marker position={center} />
       </GoogleMap>
     </LoadScript>
   );
 };
 
-export default GoogleMapFrame;
+export default GoogleMapDorm;

@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import * as roomApi from "../../../api/room";
 import { useParams } from "react-router-dom";
-import Spinner from "../../../components/Spinner";
+
+import * as roomApi from "../../../api/room";
+import * as appointmentApi from "../../../api/appointment";
 
 const initialRoom = {
   id: 1,
@@ -21,6 +22,7 @@ export const AppointmentContext = createContext();
 export default function AppointmentContextProvider({ children }) {
   const { targetRoomId } = useParams();
   const [roomTarget, setRoomTarget] = useState(initialRoom);
+  const [appointments, setAppointment] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -37,8 +39,34 @@ export default function AppointmentContextProvider({ children }) {
     setInitialLoading(false);
   }, []);
 
+  useEffect(() => {
+    const fetchAllAppointments = async () => {
+      try {
+        const res = await appointmentApi.getAllAppointmentByDormId(dormId);
+        setAppointment(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllAppointments();
+    setInitialLoading(false);
+  }, []);
+
+  const userCreateAppointment = async (appointment) => {
+    const res = await appointmentApi.userCreateAppointment(appointment);
+    console.log(res);
+  };
+
   return (
-    <AppointmentContext.Provider value={{ roomTarget, initialLoading }}>
+    <AppointmentContext.Provider
+      value={{
+        roomTarget,
+        userCreateAppointment,
+        initialLoading,
+        targetRoomId,
+        appointments,
+      }}
+    >
       {children}
     </AppointmentContext.Provider>
   );

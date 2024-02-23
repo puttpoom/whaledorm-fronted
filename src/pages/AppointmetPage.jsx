@@ -3,7 +3,7 @@ import AppointmentContextProvider from "../features/appointment/contexts/Appoint
 
 export default function AppointmetPage() {
   return (
-    <div className="flex flex-row">
+    <div>
       <AppointmentContextProvider>
         <AppointmentContainer />
       </AppointmentContextProvider>
