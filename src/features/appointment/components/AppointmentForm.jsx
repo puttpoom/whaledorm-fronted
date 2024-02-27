@@ -2,14 +2,22 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useState } from "react";
 import useAppointment from "../../../hooks/use-appointment";
+import useRoom from "../../../hooks/use-room";
+import GoogleMapRoom from "../../../components/GoogleMapRoom";
 
 export default function AppointmentForm() {
   const { userCreateAppointment, roomTarget } = useAppointment();
+  console.log(roomTarget);
 
   const { dorm } = roomTarget;
   const dormName = dorm && dorm.dormName;
+
+  //for google map component
+  const latLong = dorm && dorm.latLong;
+  console.log(latLong, typeof latLong);
+
   const { id } = roomTarget;
-  const { info } = roomTarget;
+  // const { info } = roomTarget;
   const { title } = roomTarget;
 
   const initial = {
@@ -45,7 +53,9 @@ export default function AppointmentForm() {
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-row mt-6 gap-6">
       <div className="rounded-xl w-full h-auto">
+        {/* img or google map */}
         <img src="" alt="" />
+        {/* <GoogleMapRoom latLong={latLong} zoom={19} /> */}
       </div>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
