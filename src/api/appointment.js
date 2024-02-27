@@ -5,3 +5,6 @@ export const userCreateAppointment = (appointment) =>
 
 export const getAllAppointmentByDormId = (dormId) =>
   axios.get(`/dorm/appointments/${dormId}`);
+
+export const getUserAppointmentsByUserId = (userId) =>
+  axios.get(`/appointment/${userId}`);

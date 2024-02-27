@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import * as roomApi from "../../../api/room";
 import * as appointmentApi from "../../../api/appointment";
+import MySwal from "../../../utills/sweetaleart";
+import useAuth from "../../../hooks/use-auth";
 
 const initialRoom = {
   id: 1,
@@ -20,9 +22,12 @@ const initialRoom = {
 export const AppointmentContext = createContext();
 
 export default function AppointmentContextProvider({ children }) {
+  const { authUser } = useAuth();
   const { targetRoomId } = useParams();
+
   const [roomTarget, setRoomTarget] = useState(initialRoom);
   const [appointments, setAppointment] = useState([]);
+  const [userAppointments, setUserAppointments] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -37,7 +42,7 @@ export default function AppointmentContextProvider({ children }) {
     };
     fetchRoomByRoomId();
     setInitialLoading(false);
-  }, []);
+  }, [targetRoomId]);
 
   useEffect(() => {
     const fetchAllAppointments = async () => {
@@ -52,8 +57,42 @@ export default function AppointmentContextProvider({ children }) {
     setInitialLoading(false);
   }, []);
 
+  useEffect(() => {
+    const fetchUserAppointments = async () => {
+      try {
+        const res = await appointmentApi.getUserAppointmentsByUserId(
+          authUser.id
+        );
+        // console.log(res.data);
+        setUserAppointments(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserAppointments();
+    setInitialLoading(false);
+  }, []);
+
   const userCreateAppointment = async (appointment) => {
     const res = await appointmentApi.userCreateAppointment(appointment);
+
+    if (res.status === 201) {
+      MySwal.fire({
+        position: "center",
+        icon: "success",
+        title: "ทำการนัดหมายสำเร็จ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      MySwal.fire({
+        position: "center",
+        icon: "error",
+        title: "ทำการนัดหมายไม่สำเร็จ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
     console.log(res);
   };
 
@@ -65,6 +104,7 @@ export default function AppointmentContextProvider({ children }) {
         initialLoading,
         targetRoomId,
         appointments,
+        userAppointments,
       }}
     >
       {children}

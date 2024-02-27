@@ -41,7 +41,9 @@ export default function Header() {
             <Link to="/dorm/appointments">รายการนัดหมาย</Link>
           ) : null}
           {authUser && authUser.role === "USER" ? (
-            <Link to="/dorm/appointments">รายการนัดหมายของฉัน</Link>
+            <Link to={`/user/appointments/${authUser.id}`}>
+              รายการนัดหมายของฉัน
+            </Link>
           ) : null}
           <div>เกี่ยวกับเรา</div>
         </div>

@@ -7,6 +7,7 @@ import ProtectedRouteDorm from "../features/dorm/components/ProtectedRouteDorm";
 import DormRoomPage from "../pages/DormRoomPage";
 import AppointmetPage from "../pages/AppointmetPage";
 import AllAppointmentPage from "../pages/AllAppointmentPage";
+import UserAppointmentPage from "../pages/UserAppointmentPage";
 
 const route = createBrowserRouter([
   {
@@ -28,16 +29,6 @@ const route = createBrowserRouter([
     ],
   },
   {
-    path: "/",
-    element: <Container />,
-    children: [
-      {
-        path: "dorm",
-        element: <DormPage />,
-      },
-    ],
-  },
-  {
     path: "/dorm",
     element: (
       <ProtectedRouteDorm>
@@ -52,6 +43,20 @@ const route = createBrowserRouter([
       {
         path: "appointments",
         element: <AllAppointmentPage />,
+      },
+    ],
+  },
+  {
+    path: "/user",
+    element: (
+      <RedirectIfAuthenticate>
+        <Container />
+      </RedirectIfAuthenticate>
+    ),
+    children: [
+      {
+        path: "appointments/:targetUserId",
+        element: <UserAppointmentPage />,
       },
     ],
   },

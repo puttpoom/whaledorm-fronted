@@ -3,10 +3,26 @@ import { CalendarFold } from "lucide-react";
 import { Link } from "react-router-dom";
 import RoomFacilities from "./RoomFacilities";
 
-export default function RoomCard({ rooms, isShowBtn = true }) {
-  // const navigate = useNavigate();
-  // const handleOnClickLinkToAppointmentPageByRoomId = (roomId) => {
-  //   return navigate(`/dorm/rooms/appointment/${roomId}`);
+export default function RoomCard({
+  rooms,
+  isShowBookBtn = true,
+  isShowStatusAppointmnetBtn = false,
+  statusBtn,
+}) {
+  // const status = statusBtn === "PEDNING" ? "รอการตอบรับ" : "ตอบรับแล้ว";
+
+  const checkStatus = (statusBtn) => {
+    switch (statusBtn) {
+      case "PENDING":
+        return <p>รอการตอบรับ</p>;
+      case "ACCEPTED":
+        return <p>ตอบรับแล้ว</p>;
+      case "REJECTED":
+        return <p>ถูกปฏิเสธ</p>;
+      default:
+        return <p>null</p>; // Or any other default behavior/message
+    }
+  };
 
   const formatPrice = (price) => {
     return price.toLocaleString("th-TH");
@@ -37,7 +53,7 @@ export default function RoomCard({ rooms, isShowBtn = true }) {
         </span>
         <span className="flex w-[15vw] justify-center items-center">
           <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
-            {isShowBtn ? (
+            {isShowBookBtn ? (
               <Button
                 color="bookBtn"
                 text="white"
@@ -50,6 +66,18 @@ export default function RoomCard({ rooms, isShowBtn = true }) {
               </Button>
             ) : null}
           </Link>
+          {isShowStatusAppointmnetBtn ? (
+            <Button
+              color="bookBtn"
+              text="white"
+              textSize="sm"
+              width="full"
+              className="w-[20vw]"
+            >
+              {checkStatus(statusBtn)}
+              <CalendarFold size={18} />
+            </Button>
+          ) : null}
         </span>
       </div>
       <div className="border-l border-dashed p-4 items-center text-center">

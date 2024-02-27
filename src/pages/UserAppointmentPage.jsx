@@ -1,11 +1,10 @@
-import AppointmentContainer from "../features/appointment/components/AppointmentContainer";
+import UserAppointmentContainer from "../features/appointment/components/UserAppointmentContainer";
 import AppointmentContextProvider from "../features/appointment/contexts/AppointmentContext";
-
-export default function AppointmetPage() {
+export default function UserAppointmentPage() {
   return (
     <>
       <AppointmentContextProvider>
-        <AppointmentContainer />
+        <UserAppointmentContainer />
       </AppointmentContextProvider>
     </>
   );
