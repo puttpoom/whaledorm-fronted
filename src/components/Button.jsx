@@ -4,9 +4,9 @@ const bgClasses = {
   green: "bg-green-500",
   red2: "bg-red-600",
   bookBtn: "bg-[#577CFF]",
-  pendingBtn: "bg-yellow-500",
-  cancledBtn: "bg-red-500",
-  approveBtn: "bg-green-500",
+  PEDNING: "bg-yellow-500",
+  REJECTED: "bg-red-500",
+  ACCEPTED: "bg-green-500",
 };
 
 const textClasses = {

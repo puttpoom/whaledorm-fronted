@@ -1,5 +1,5 @@
 import Button from "./Button";
-import { CalendarFold } from "lucide-react";
+import { CalendarFold, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import RoomFacilities from "./RoomFacilities";
 
@@ -8,17 +8,32 @@ export default function RoomCard({
   isShowBookBtn = true,
   isShowStatusAppointmnetBtn = false,
   statusBtn,
+  appointedDate,
+  appointedTime,
 }) {
-  // const status = statusBtn === "PEDNING" ? "รอการตอบรับ" : "ตอบรับแล้ว";
-
   const checkStatus = (statusBtn) => {
     switch (statusBtn) {
-      case "PENDING":
-        return <p>รอการตอบรับ</p>;
+      case "PEDNING":
+        // let pendening = "pendingBtn";
+        return (
+          <p className="flex items-center gap-2">
+            รอการตอบรับ <Clock className="inline" size={18} />
+          </p>
+        );
       case "ACCEPTED":
-        return <p>ตอบรับแล้ว</p>;
+        // let accepted = "approveBtn";
+        return (
+          <p className="flex items-center gap-2">
+            ตอบรับแล้ว <CheckSquare className="inline" size={18} />
+          </p>
+        );
       case "REJECTED":
-        return <p>ถูกปฏิเสธ</p>;
+        // let rejected = "cancledBtn";
+        return (
+          <p className="flex items-center gap-2">
+            ถูกปฏิเสธ <Ban className="inline" size={18} />
+          </p>
+        );
       default:
         return <p>null</p>; // Or any other default behavior/message
     }
@@ -46,7 +61,11 @@ export default function RoomCard({
       <div className="grid grid-rows justify-self-stretch items-center p-4 gap-2">
         <span className="text-xl font-semibold">{rooms.title}</span>
         <span className="text-sm text-gray-800">
-          Dorm - ประกาศเมื่อวันที่ {formatDate(rooms.createdAt)}
+          {appointedDate
+            ? `วันและเวลาที่นัดหมาย: ${formatDate(
+                appointedDate
+              )} — ${appointedTime}`
+            : `Dorm - ประกาศเมื่อวันที่ ${formatDate(rooms.createdAt)}`}
         </span>
         <span className="text-red-500 font-bold text-[18px]">
           {formatPrice(rooms.price)} บาท/เดือน
@@ -68,14 +87,13 @@ export default function RoomCard({
           </Link>
           {isShowStatusAppointmnetBtn ? (
             <Button
-              color="bookBtn"
+              color={statusBtn}
               text="white"
               textSize="sm"
               width="full"
               className="w-[20vw]"
             >
               {checkStatus(statusBtn)}
-              <CalendarFold size={18} />
             </Button>
           ) : null}
         </span>

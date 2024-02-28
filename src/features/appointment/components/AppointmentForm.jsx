@@ -1,11 +1,15 @@
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAppointment from "../../../hooks/use-appointment";
 import useRoom from "../../../hooks/use-room";
 import GoogleMapRoom from "../../../components/GoogleMapRoom";
+import useAuth from "../../../hooks/use-auth";
 
 export default function AppointmentForm() {
+  const navigate = useNavigate();
+  const { authUser } = useAuth();
   const { userCreateAppointment, roomTarget } = useAppointment();
   console.log(roomTarget);
 
@@ -13,17 +17,17 @@ export default function AppointmentForm() {
   const dormName = dorm && dorm.dormName;
 
   //for google map component
-  const latLong = dorm && dorm.latLong;
-  console.log(latLong, typeof latLong);
+  // const latLong = dorm && dorm.latLong;
+  // console.log(latLong, typeof latLong);
 
   const { id } = roomTarget;
   // const { info } = roomTarget;
   const { title } = roomTarget;
 
   const initial = {
-    dormName: dormName,
-    roomId: id,
-    title: title,
+    dormName: "",
+    roomId: -1,
+    title: "",
     fullName: "",
     phone: "",
     appointedDate: "",
@@ -38,6 +42,8 @@ export default function AppointmentForm() {
       ...input,
       [e.target.name]: e.target.value,
       dormName: dormName,
+      roomId: id,
+      title: title,
     });
   };
 
@@ -45,6 +51,7 @@ export default function AppointmentForm() {
     try {
       e.preventDefault();
       await userCreateAppointment(input);
+      navigate(`/user/appointments/${authUser.id}`);
     } catch (error) {
       console.log(error);
     }

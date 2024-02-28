@@ -9,6 +9,8 @@ export default function UserAppointment() {
       {userAppointments.map((appointment, index) => (
         <RoomCard
           key={index}
+          appointedDate={appointment.appointedDate}
+          appointedTime={appointment.appointedTime}
           rooms={appointment.room}
           statusBtn={appointment.appointmentStatus}
           isShowBookBtn={false}
