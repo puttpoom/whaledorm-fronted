@@ -5,7 +5,7 @@ export default function UserAppointment() {
   const { userAppointments } = useAppointment();
   console.log(userAppointments);
   return (
-    <div className="flex flex-col gap-8 bg-[#F1F5F9] p-12">
+    <div className="flex flex-col gap-8 bg-[#F1F5F9] p-12 min-h-content">
       {userAppointments.map((appointment, index) => (
         <RoomCard
           key={index}

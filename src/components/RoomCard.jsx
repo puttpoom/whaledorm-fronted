@@ -52,7 +52,7 @@ export default function RoomCard({
   };
 
   return (
-    <div className="bg-[#F4F4F4] w-full grid grid-cols-[2fr_4fr_4fr] h-fit rounded-xl overflow-hidden shadow-[0_1px_1px_rgb(0,0,0,0.2)]">
+    <div className="bg-[#F4F4F4] w-full grid grid-cols-[2fr_4fr_4fr] h-fit rounded-xl overflow-hidden shadow-[0_1px_1px_rgb(0,0,0,0.2)] flex-shrink-0">
       <img
         src={rooms.roomImages}
         alt="room_images"

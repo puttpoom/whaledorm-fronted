@@ -2,7 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        content: "calc(100vh - 67.76px)",
+      },
+    },
   },
   plugins: [],
   daisyui: {
