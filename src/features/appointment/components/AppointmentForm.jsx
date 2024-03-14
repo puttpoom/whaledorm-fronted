@@ -6,26 +6,22 @@ import useAppointment from "../../../hooks/use-appointment";
 import useRoom from "../../../hooks/use-room";
 import GoogleMapRoom from "../../../components/GoogleMapRoom";
 import useAuth from "../../../hooks/use-auth";
+import Carousel from "../../../components/Carousel";
 
 export default function AppointmentForm() {
   const navigate = useNavigate();
   const { authUser } = useAuth();
   const { userCreateAppointment, roomTarget } = useAppointment();
-  console.log(roomTarget);
+  // console.log(roomTarget);
 
   const { dorm } = roomTarget;
   const dormName = dorm && dorm.dormName;
-
-  //for google map component
-  // const latLong = dorm && dorm.latLong;
-  // console.log(latLong, typeof latLong);
+  const dormId = dorm && dorm.id;
 
   const { id } = roomTarget;
-  // const { info } = roomTarget;
   const { title } = roomTarget;
 
   const initial = {
-    dormName: "",
     roomId: -1,
     title: "",
     fullName: "",
@@ -41,9 +37,9 @@ export default function AppointmentForm() {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-      dormName: dormName,
       roomId: id,
       title: title,
+      dormId: dormId,
     });
   };
 
@@ -63,6 +59,7 @@ export default function AppointmentForm() {
         {/* img or google map */}
         <img src="" alt="" />
         {/* <GoogleMapRoom latLong={latLong} zoom={19} /> */}
+        {/* <Carousel /> */}
       </div>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">

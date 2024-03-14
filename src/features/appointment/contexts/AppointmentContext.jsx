@@ -16,7 +16,7 @@ const initialRoom = {
   size: 22,
   roomStatus: "VACANT",
   dormId: 1,
-  createdAt: "dd/mm/yyyy - createdAt",
+  createdAt: "dd/mm/yyyy",
 };
 
 export const AppointmentContext = createContext();

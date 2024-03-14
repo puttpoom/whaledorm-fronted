@@ -16,25 +16,27 @@ const GoogleMapFrame = () => {
   const radius = 800; // เช่น 10 กิโลเมตร
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyAPK-dQk-jAStQIzoKHRj2CG2oFHXZaVvU">
-      <GoogleMap
-        mapContainerStyle={{ height: "400px", width: "100%" }}
-        center={center}
-        zoom={15}
-      >
-        <Circle
+    <div className="z-10">
+      <LoadScript googleMapsApiKey="AIzaSyAPK-dQk-jAStQIzoKHRj2CG2oFHXZaVvU">
+        <GoogleMap
+          mapContainerStyle={{ height: "400px", width: "100%" }}
           center={center}
-          radius={radius}
-          options={{
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.5,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.2,
-          }}
-        />
-      </GoogleMap>
-    </LoadScript>
+          zoom={15}
+        >
+          <Circle
+            center={center}
+            radius={radius}
+            options={{
+              strokeColor: "#FF0000",
+              strokeOpacity: 0.5,
+              strokeWeight: 2,
+              fillColor: "#FF0000",
+              fillOpacity: 0.2,
+            }}
+          />
+        </GoogleMap>
+      </LoadScript>
+    </div>
   );
 };
 

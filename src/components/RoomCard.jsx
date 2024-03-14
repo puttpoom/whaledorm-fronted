@@ -70,7 +70,7 @@ export default function RoomCard({
         <span className="text-red-500 font-bold text-[18px]">
           {formatPrice(rooms.price)} บาท/เดือน
         </span>
-        <span className="flex w-[15vw] justify-center items-center">
+        <span className="flex w-fit justify-center items-center">
           <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
             {isShowBookBtn ? (
               <Button

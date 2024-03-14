@@ -84,7 +84,7 @@ export default function RegisterForm() {
   return (
     <form
       onSubmit={handleSubmitForm}
-      className="justify-self-center fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75"
+      className="justify-self-center w-full fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50"
     >
       <div
         ref={registerFormEl}

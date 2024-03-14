@@ -78,7 +78,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmitForm}
-      className="justify-self-center fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75"
+      className="justify-self-center fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 w-full z-10"
     >
       <div
         ref={logInFormEl}
