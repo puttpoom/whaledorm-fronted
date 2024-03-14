@@ -30,6 +30,39 @@ export default function AppointmentContextProvider({ children }) {
   const [userAppointments, setUserAppointments] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
+  const refetch = () => {
+    const fetchRoomByRoomId = async () => {
+      try {
+        const res = await roomApi.getRoomByRoomId(targetRoomId);
+        setRoomTarget(res.data);
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const fetchAllAppointments = async () => {
+      try {
+        const res = await appointmentApi.getAllAppointmentByDormId(dormId);
+        setAppointment(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const fetchUserAppointments = async () => {
+      try {
+        const res = await appointmentApi.getUserAppointmentsByUserId(
+          authUser.id
+        );
+        setUserAppointments(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRoomByRoomId();
+    fetchAllAppointments();
+    fetchUserAppointments();
+  };
+
   useEffect(() => {
     const fetchRoomByRoomId = async () => {
       try {
@@ -96,11 +129,35 @@ export default function AppointmentContextProvider({ children }) {
     console.log(res);
   };
 
+  const userDeleteAppointment = async (appointmentId) => {
+    const res = await appointmentApi.userDeleteAppointment(appointmentId);
+    if (res.status === 204) {
+      MySwal.fire({
+        position: "center",
+        icon: "success",
+        title: "ลบการนัดหมายสำเร็จ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      MySwal.fire({
+        position: "center",
+        icon: "error",
+        title: "ลบการนัดหมายไม่สำเร็จ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    console.log(res);
+  };
+
   return (
     <AppointmentContext.Provider
       value={{
         roomTarget,
         userCreateAppointment,
+        userDeleteAppointment,
+        refetch,
         initialLoading,
         targetRoomId,
         appointments,

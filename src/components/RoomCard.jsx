@@ -1,24 +1,31 @@
 import Button from "./Button";
-import { CalendarFold, Clock } from "lucide-react";
+import { CalendarFold, Clock, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import useAppointment from "../../src/hooks/use-appointment";
 import RoomFacilities from "./RoomFacilities";
 
 export default function RoomCard({
+  appointmentId,
   rooms,
   isShowBookBtn = true,
+  isShowDeleteBtn = false,
   isShowStatusAppointmnetBtn = false,
   statusBtn,
   appointedDate,
   appointedTime,
 }) {
+  const { userDeleteAppointment } = useAppointment();
+
   const checkStatus = (statusBtn) => {
     switch (statusBtn) {
       case "PEDNING":
         // let pendening = "pendingBtn";
         return (
-          <p className="flex items-center gap-2">
-            รอการตอบรับ <Clock className="inline" size={18} />
-          </p>
+          <>
+            <p className="flex items-center gap-2">
+              รอการตอบรับ <Clock className="inline" size={18} />
+            </p>
+          </>
         );
       case "ACCEPTED":
         // let accepted = "approveBtn";
@@ -85,17 +92,32 @@ export default function RoomCard({
               </Button>
             ) : null}
           </Link>
-          {isShowStatusAppointmnetBtn ? (
-            <Button
-              color={statusBtn}
-              text="white"
-              textSize="sm"
-              width="full"
-              className="w-[20vw]"
-            >
-              {checkStatus(statusBtn)}
-            </Button>
-          ) : null}
+          <div className="flex gap-2">
+            {isShowStatusAppointmnetBtn ? (
+              <Button
+                color={statusBtn}
+                text="white"
+                textSize="sm"
+                width="full"
+                className="w-[20vw] "
+              >
+                {checkStatus(statusBtn)}
+              </Button>
+            ) : null}
+            {isShowDeleteBtn ? (
+              <Button
+                color="red2"
+                text="white"
+                textSize="sm"
+                width="full"
+                className="w-[20vw]"
+                onClick={() => userDeleteAppointment(appointmentId)}
+              >
+                ยกเลิก
+                <Trash2 size={18} />
+              </Button>
+            ) : null}
+          </div>
         </span>
       </div>
       <div className="border-l border-dashed p-4 items-center text-center">

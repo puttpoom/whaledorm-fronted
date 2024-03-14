@@ -8,3 +8,6 @@ export const getAllAppointmentByDormId = (dormId) =>
 
 export const getUserAppointmentsByUserId = (userId) =>
   axios.get(`/appointment/${userId}`);
+
+export const userDeleteAppointment = (appointmentId) =>
+  axios.delete(`/appointment/${appointmentId}`);
