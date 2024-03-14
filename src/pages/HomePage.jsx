@@ -6,7 +6,7 @@ import RoomContextProvider from "../features/room/contexts/RoomContext";
 
 export default function HomePage() {
   return (
-    <div className="grid bg-[#F1F5F9] grid-flow-row items-center justify-center">
+    <div className="grid bg-[#F1F5F9] grid-flow-row items-center justify-center h-content overflow-auto">
       <DormContextProvider>
         <RoomContextProvider>
           <div className="flex flex-col text-5xl font-bold text-center pt-12 py-8 gap-4">

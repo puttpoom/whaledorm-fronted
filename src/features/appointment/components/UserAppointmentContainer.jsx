@@ -5,18 +5,22 @@ export default function UserAppointment() {
   const { userAppointments } = useAppointment();
   console.log(userAppointments);
   return (
-    <div className="flex flex-col gap-8 bg-[#F1F5F9] p-12 min-h-content">
-      {userAppointments.map((appointment, index) => (
-        <RoomCard
-          key={index}
-          appointedDate={appointment.appointedDate}
-          appointedTime={appointment.appointedTime}
-          rooms={appointment.room}
-          statusBtn={appointment.appointmentStatus}
-          isShowBookBtn={false}
-          isShowStatusAppointmnetBtn={true}
-        />
-      ))}
+    <div className="flex flex-col gap-8 bg-[#F1F5F9] p-12 h-content overflow-auto">
+      {!userAppointments ? (
+        <p>คุณยังไม่มีรายการนัดหมาย</p>
+      ) : (
+        userAppointments.map((appointment, index) => (
+          <RoomCard
+            key={index}
+            appointedDate={appointment.appointedDate}
+            appointedTime={appointment.appointedTime}
+            rooms={appointment.room}
+            statusBtn={appointment.appointmentStatus}
+            isShowBookBtn={false}
+            isShowStatusAppointmnetBtn={true}
+          />
+        ))
+      )}
     </div>
   );
 }
