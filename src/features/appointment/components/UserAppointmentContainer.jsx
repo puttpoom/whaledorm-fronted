@@ -4,11 +4,11 @@ import { useEffect } from "react";
 
 export default function UserAppointment() {
   const { userAppointments } = useAppointment();
-  console.log(userAppointments);
+  console.log(userAppointments, typeof userAppointments);
   return (
     <div className="flex flex-col gap-8 bg-[#F1F5F9] p-12 h-content overflow-auto">
-      {userAppointments.lenght < 0 ? (
-        <div>คุณยังไม่มีรายการนัดหมาย</div>
+      {!userAppointments.length > 0 ? (
+        <p className="text-lg">คุณยังไม่มีรายการนัดหมาย</p>
       ) : (
         userAppointments.map((appointment, index) => (
           <RoomCard
