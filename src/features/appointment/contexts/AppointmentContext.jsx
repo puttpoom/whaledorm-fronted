@@ -30,38 +30,19 @@ export default function AppointmentContextProvider({ children }) {
   const [userAppointments, setUserAppointments] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
-  const refetch = () => {
-    const fetchRoomByRoomId = async () => {
-      try {
-        const res = await roomApi.getRoomByRoomId(targetRoomId);
-        setRoomTarget(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    const fetchAllAppointments = async () => {
-      try {
-        const res = await appointmentApi.getAllAppointmentByDormId(dormId);
-        setAppointment(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    const fetchUserAppointments = async () => {
-      try {
-        const res = await appointmentApi.getUserAppointmentsByUserId(
-          authUser.id
-        );
-        setUserAppointments(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRoomByRoomId();
-    fetchAllAppointments();
-    fetchUserAppointments();
-  };
+  // const refetch = () => {
+  //   const fetchUserAppointments = async () => {
+  //     try {
+  //       const res = await appointmentApi.getUserAppointmentsByUserId(
+  //         authUser.id
+  //       );
+  //       setUserAppointments(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchUserAppointments();
+  // };
 
   useEffect(() => {
     const fetchRoomByRoomId = async () => {
@@ -77,18 +58,20 @@ export default function AppointmentContextProvider({ children }) {
     setInitialLoading(false);
   }, [targetRoomId]);
 
-  useEffect(() => {
-    const fetchAllAppointments = async () => {
-      try {
-        const res = await appointmentApi.getAllAppointmentByDormId(dormId);
-        setAppointment(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAllAppointments();
-    setInitialLoading(false);
-  }, []);
+  if (authUser.role === "DORM") {
+    useEffect(() => {
+      const fetchAllAppointments = async () => {
+        try {
+          const res = await appointmentApi.getAllAppointmentByDormId(dormId);
+          setAppointment(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchAllAppointments();
+      setInitialLoading(false);
+    }, []);
+  }
 
   useEffect(() => {
     const fetchUserAppointments = async () => {
@@ -97,14 +80,14 @@ export default function AppointmentContextProvider({ children }) {
           authUser.id
         );
         // console.log(res.data);
-        setUserAppointments(res.data);
+        setUserAppointments([...res.data]);
       } catch (err) {
         console.log(err);
       }
     };
     fetchUserAppointments();
     setInitialLoading(false);
-  }, []);
+  }, [authUser.id]);
 
   const userCreateAppointment = async (appointment) => {
     const res = await appointmentApi.userCreateAppointment(appointment);
@@ -130,25 +113,43 @@ export default function AppointmentContextProvider({ children }) {
   };
 
   const userDeleteAppointment = async (appointmentId) => {
-    const res = await appointmentApi.userDeleteAppointment(appointmentId);
-    if (res.status === 204) {
-      MySwal.fire({
-        position: "center",
-        icon: "success",
-        title: "ลบการนัดหมายสำเร็จ",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } else {
-      MySwal.fire({
-        position: "center",
-        icon: "error",
-        title: "ลบการนัดหมายไม่สำเร็จ",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-    console.log(res);
+    MySwal.fire({
+      title: "คุณต้องการยกเลิกการนัดหมายดูห้องพักนี้หรือเปล่า ?",
+      showDenyButton: true,
+      // showCancelButton: true,
+      confirmButtonText: "ลบการนัดหมาย",
+      denyButtonText: `ยกเลิก`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await appointmentApi.userDeleteAppointment(appointmentId);
+        //cocept delete appointment in userAppointments
+        setUserAppointments([
+          ...userAppointments.filter((app) => app.id !== appointmentId),
+        ]);
+        if (res.status === 204) {
+          MySwal.fire("ยกเลิกสำเร็จ!", "", "success");
+        } else {
+          MySwal.fire("ยกเลิกการนัดหมายไม่สำเร็จ", "", "error");
+        }
+      }
+    });
+    // if (res.status === 204) {
+    //   MySwal.fire({
+    //     position: "center",
+    //     icon: "success",
+    //     title: "ลบการนัดหมายสำเร็จ",
+    //     showConfirmButton: false,
+    //     timer: 2000,
+    //   });
+    // } else {
+    //   MySwal.fire({
+    //     position: "center",
+    //     icon: "error",
+    //     title: "ลบการนัดหมายไม่สำเร็จ",
+    //     showConfirmButton: false,
+    //     timer: 2000,
+    //   });
+    // }
   };
 
   return (
@@ -157,7 +158,6 @@ export default function AppointmentContextProvider({ children }) {
         roomTarget,
         userCreateAppointment,
         userDeleteAppointment,
-        refetch,
         initialLoading,
         targetRoomId,
         appointments,
