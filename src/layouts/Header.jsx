@@ -29,13 +29,13 @@ export default function Header() {
 
   return (
     <header
-      className={`flex bg-white shadow-md justify-between px-24 py-2 w-full z-50 ${
+      className={`flex bg-white shadow-md justify-between px-24 py-2 w-full z-50 h-16 ${
         isScrolled ? "sticky top-0" : ""
       }`}
     >
       <img src={logoImg} className="hidden md:block w-48 h-auto" />
       <div className="flex gap-8 items-center min-w-4">
-        <div className="flex gap-6">
+        <div className="flex gap-6 flex-shrink-0">
           <Link to="/">หน้าแรก</Link>
           {authUser && authUser.role === "DORM" ? (
             <Link to="/dorm/appointments">รายการนัดหมาย</Link>
@@ -47,7 +47,7 @@ export default function Header() {
           ) : null}
           <div>เกี่ยวกับเรา</div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-shrink-0">
           <Button
             color="red"
             textColor="red"
