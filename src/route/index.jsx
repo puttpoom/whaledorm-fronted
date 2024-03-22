@@ -6,8 +6,8 @@ import DormPage from "../pages/DormPage";
 import ProtectedRouteDorm from "../features/dorm/components/ProtectedRouteDorm";
 import DormRoomPage from "../pages/DormRoomPage";
 import AppointmetPage from "../pages/AppointmetPage";
-import AllAppointmentPage from "../pages/AllAppointmentPage";
 import UserAppointmentPage from "../pages/UserAppointmentPage";
+import DormAppointmentPage from "../pages/DormAppointmentPage";
 
 const route = createBrowserRouter([
   {
@@ -42,7 +42,7 @@ const route = createBrowserRouter([
       },
       {
         path: "appointments",
-        element: <AllAppointmentPage />,
+        element: <DormAppointmentPage />,
       },
     ],
   },
