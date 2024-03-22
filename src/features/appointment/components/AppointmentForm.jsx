@@ -47,7 +47,12 @@ export default function AppointmentForm() {
     try {
       e.preventDefault();
       await userCreateAppointment(input);
-      navigate(`/user/appointments/${authUser.id}`);
+      // navigate(`/user/appointments/${authUser.id}`);
+      if (authUser.role != "DORM") {
+        navigate(`/user/appointments/${authUser.id}`);
+      } else {
+        navigate("/dorm/appointments");
+      }
     } catch (error) {
       console.log(error);
     }
