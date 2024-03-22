@@ -30,20 +30,6 @@ export default function AppointmentContextProvider({ children }) {
   const [userAppointments, setUserAppointments] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
-  // const refetch = () => {
-  //   const fetchUserAppointments = async () => {
-  //     try {
-  //       const res = await appointmentApi.getUserAppointmentsByUserId(
-  //         authUser.id
-  //       );
-  //       setUserAppointments(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchUserAppointments();
-  // };
-
   useEffect(() => {
     const fetchRoomByRoomId = async () => {
       try {
@@ -123,9 +109,9 @@ export default function AppointmentContextProvider({ children }) {
       if (result.isConfirmed) {
         const res = await appointmentApi.userDeleteAppointment(appointmentId);
         //cocept delete appointment in userAppointments
-        setUserAppointments([
-          ...userAppointments.filter((app) => app.id !== appointmentId),
-        ]);
+        setUserAppointments(
+          userAppointments.filter((app) => app.id !== appointmentId)
+        );
         if (res.status === 204) {
           MySwal.fire("ยกเลิกสำเร็จ!", "", "success");
         } else {

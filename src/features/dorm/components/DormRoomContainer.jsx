@@ -14,7 +14,7 @@ export default function DormRoomContainer() {
   const long = +latLong.split(",")[1];
 
   return (
-    <div className="w-[100vw] grid grid-cols-[8fr_2fr] justify-self-center py-12 px-20 bg-[#F1F5F9] gap-4">
+    <div className="h-content overflow-auto grid grid-cols-[8fr_2fr] justify-self-center py-12 px-20 bg-[#F1F5F9] gap-4">
       <div className="flex flex-col bg-white rounded-xl shadow-[0_1px_5px_rgb(0,0,0,0.1)] p-8">
         {/* Dorm Info */}
         <div className="flex flex-col gap-4">

@@ -21,6 +21,7 @@ export default function UserAppointment() {
             isShowBookBtn={false}
             isShowStatusAppointmnetBtn={true}
             isShowDeleteBtn={true}
+            isShowEditAppointmentBtn={false}
           />
         ))
       )}

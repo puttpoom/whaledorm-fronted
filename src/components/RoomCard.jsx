@@ -1,6 +1,6 @@
 import Button from "./Button";
-import { CalendarFold, Clock, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { CalendarFold, Clock, Trash2, PenSquareIcon } from "lucide-react";
+import { Link, Navigate } from "react-router-dom";
 import useAppointment from "../../src/hooks/use-appointment";
 import RoomFacilities from "./RoomFacilities";
 
@@ -10,6 +10,7 @@ export default function RoomCard({
   isShowBookBtn = true,
   isShowDeleteBtn = false,
   isShowStatusAppointmnetBtn = false,
+  isShowEditAppointmentBtn = false,
   statusBtn,
   appointedDate,
   appointedTime,
@@ -77,47 +78,59 @@ export default function RoomCard({
         <span className="text-red-500 font-bold text-[18px]">
           {formatPrice(rooms.price)} บาท/เดือน
         </span>
-        <span className="flex w-fit justify-center items-center">
-          <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
-            {isShowBookBtn ? (
+        <span className="flex w-full justify-start gap-2 items-center">
+          {isShowBookBtn ? (
+            <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
               <Button
                 color="bookBtn"
                 text="white"
                 textSize="sm"
                 width="full"
                 className="w-[20vw]"
+                // /dorm/rooms/appointment/${rooms.id}
               >
                 นัดเวลาดูห้องพักนี้
                 <CalendarFold size={18} />
               </Button>
-            ) : null}
-          </Link>
-          <div className="flex gap-2">
-            {isShowStatusAppointmnetBtn ? (
-              <Button
-                color={statusBtn}
-                text="white"
-                textSize="sm"
-                width="full"
-                className="w-[20vw] "
-              >
-                {checkStatus(statusBtn)}
-              </Button>
-            ) : null}
-            {isShowDeleteBtn ? (
-              <Button
-                color="red2"
-                text="white"
-                textSize="sm"
-                width="full"
-                className="w-[20vw]"
-                onClick={() => userDeleteAppointment(appointmentId)}
-              >
-                ยกเลิก
-                <Trash2 size={18} />
-              </Button>
-            ) : null}
-          </div>
+            </Link>
+          ) : null}
+          {isShowStatusAppointmnetBtn ? (
+            <Button
+              color={statusBtn}
+              text="white"
+              textSize="sm"
+              width="full"
+              className="w-[20vw] "
+            >
+              {checkStatus(statusBtn)}
+            </Button>
+          ) : null}
+          {isShowEditAppointmentBtn ? (
+            <Button
+              color="bookBtn"
+              text="white"
+              textSize="sm"
+              width="full"
+              className="w-[20vw]"
+              onClick={() => userDeleteAppointment(appointmentId)}
+            >
+              แก้ไข
+              <PenSquareIcon size={18} />
+            </Button>
+          ) : null}
+          {isShowDeleteBtn ? (
+            <Button
+              color="red2"
+              text="white"
+              textSize="sm"
+              width="full"
+              className="w-[20vw]"
+              onClick={() => userDeleteAppointment(appointmentId)}
+            >
+              ยกเลิก
+              <Trash2 size={18} />
+            </Button>
+          ) : null}
         </span>
       </div>
       <div className="border-l border-dashed p-4 items-center text-center">
