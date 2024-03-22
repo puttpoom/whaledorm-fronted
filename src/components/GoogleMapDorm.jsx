@@ -1,8 +1,11 @@
 import React from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import useRoom from "../hooks/use-room";
 
 const GoogleMapDorm = () => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API_KEY,
+  });
   const { latLong } = useRoom();
   console.log(latLong);
   const lat = +latLong.split(",")[0];
@@ -16,15 +19,19 @@ const GoogleMapDorm = () => {
   const radius = 800; // เช่น 10 กิโลเมตร
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyAPK-dQk-jAStQIzoKHRj2CG2oFHXZaVvU">
-      <GoogleMap
-        mapContainerStyle={{ height: "400px", width: "100%" }}
-        center={center}
-        zoom={19}
-      >
-        <Marker position={center} />
-      </GoogleMap>
-    </LoadScript>
+    <>
+      {isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={{ height: "400px", width: "100%" }}
+          center={center}
+          zoom={19}
+        >
+          <Marker position={center} />
+        </GoogleMap>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </>
   );
 };
 

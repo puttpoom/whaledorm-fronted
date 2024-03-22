@@ -1,8 +1,11 @@
 import React from "react";
-import { GoogleMap, LoadScript, Circle } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Circle } from "@react-google-maps/api";
 import useRoom from "../hooks/use-room";
 
 const GoogleMapFrame = () => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API_KEY,
+  });
   const { latLong } = useRoom();
   console.log(latLong);
   const lat = +latLong.split(",")[0];
@@ -17,7 +20,7 @@ const GoogleMapFrame = () => {
 
   return (
     <div className="z-10">
-      <LoadScript googleMapsApiKey="AIzaSyAPK-dQk-jAStQIzoKHRj2CG2oFHXZaVvU">
+      {isLoaded ? (
         <GoogleMap
           mapContainerStyle={{ height: "400px", width: "100%" }}
           center={center}
@@ -35,7 +38,9 @@ const GoogleMapFrame = () => {
             }}
           />
         </GoogleMap>
-      </LoadScript>
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };
