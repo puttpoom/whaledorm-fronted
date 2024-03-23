@@ -1,5 +1,11 @@
 import Button from "./Button";
-import { CalendarFold, Clock, Trash2, PenSquareIcon } from "lucide-react";
+import {
+  CalendarFold,
+  Clock,
+  Trash2,
+  PenSquareIcon,
+  CheckSquare,
+} from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
 import useAppointment from "../../src/hooks/use-appointment";
 import RoomFacilities from "./RoomFacilities";
@@ -22,20 +28,19 @@ export default function RoomCard({
       case "PEDNING":
         // let pendening = "pendingBtn";
         return (
-          <>
-            <p className="flex items-center gap-2">
-              รอการตอบรับ <Clock className="inline" size={18} />
-            </p>
-          </>
+          <p className="flex items-center gap-2">
+            รอการตอบรับ <Clock className="inline" size={18} />
+          </p>
         );
-      case "ACCEPTED":
+      case "CONFIRM":
         // let accepted = "approveBtn";
         return (
           <p className="flex items-center gap-2">
-            ตอบรับแล้ว <CheckSquare className="inline" size={18} />
+            การนัดหมายได้รับการยืนยันแล้ว{" "}
+            <CheckSquare className="inline" size={18} />
           </p>
         );
-      case "REJECTED":
+      case "CALCELED":
         // let rejected = "cancledBtn";
         return (
           <p className="flex items-center gap-2">
@@ -43,7 +48,7 @@ export default function RoomCard({
           </p>
         );
       default:
-        return <p>null</p>; // Or any other default behavior/message
+        return <p>null</p>;
     }
   };
 

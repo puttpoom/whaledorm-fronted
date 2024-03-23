@@ -11,3 +11,6 @@ export const getUserAppointmentsByUserId = (userId) =>
 
 export const userDeleteAppointment = (appointmentId) =>
   axios.delete(`/appointment/${appointmentId}`);
+
+export const dormUpdateAppointment = (appointmentId, appointmentStatus) =>
+  axios.patch(`/appointment/${appointmentId}`, appointmentStatus);

@@ -104,42 +104,60 @@ export default function AppointmentContextProvider({ children }) {
 
   const userDeleteAppointment = async (appointmentId) => {
     MySwal.fire({
-      title: "คุณต้องการยกเลิกการนัดหมายดูห้องพักนี้หรือเปล่า ?",
-      showDenyButton: true,
-      // showCancelButton: true,
-      confirmButtonText: "ลบการนัดหมาย",
-      denyButtonText: `ยกเลิก`,
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await appointmentApi.userDeleteAppointment(appointmentId);
-        //cocept delete appointment in userAppointments
         setUserAppointments(
           userAppointments.filter((app) => app.id !== appointmentId)
         );
-        if (res.status === 204) {
-          MySwal.fire("ยกเลิกสำเร็จ!", "", "success");
-        } else {
-          MySwal.fire("ยกเลิกการนัดหมายไม่สำเร็จ", "", "error");
-        }
+        MySwal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
       }
     });
-    // if (res.status === 204) {
-    //   MySwal.fire({
-    //     position: "center",
-    //     icon: "success",
-    //     title: "ลบการนัดหมายสำเร็จ",
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //   });
-    // } else {
-    //   MySwal.fire({
-    //     position: "center",
-    //     icon: "error",
-    //     title: "ลบการนัดหมายไม่สำเร็จ",
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //   });
-    // }
+  };
+
+  const dormUpdateAppointment = async (appointmentId) => {
+    const res = await appointmentApi.dormUpdateAppointment(appointmentId);
+  };
+
+  const handleClickResponBtn = async (appointmentId, appointmentData) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await appointmentApi.dormUpdateAppointment(
+          appointmentId,
+          appointmentData
+        );
+        setDormAppointments(
+          dormAppointments.map((app) =>
+            app.id === appointmentId ? { ...app, ...appointmentData } : app
+          )
+        );
+        // console.log(res);
+        MySwal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   return (
@@ -153,6 +171,8 @@ export default function AppointmentContextProvider({ children }) {
         appointments,
         dormAppointments,
         userAppointments,
+        dormUpdateAppointment,
+        handleClickResponBtn,
       }}
     >
       {children}

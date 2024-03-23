@@ -1,5 +1,6 @@
+import AppointmentBtn from "./AppointmentBtn";
+
 export default function AppointmentItem({ appointment }) {
-  console.log(appointment);
   const initialState = {
     id: 48,
     fullName: "Test",
@@ -14,15 +15,18 @@ export default function AppointmentItem({ appointment }) {
     dormId: 2,
   };
   return (
-    <div className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_2fr] bg-white">
-      <div className="py-2">{appointment.fullName || "fullName"}</div>
-      <div className="py-2">{appointment.title || "title"}</div>
-      <div className="py-2">{appointment.phone || "phone"}</div>
-      <div className="py-2">{appointment.appointedDate || "appointedDate"}</div>
-      <div className="py-2">{appointment.appointedTime || "appointedTime"}</div>
-      <div className="py-2">
-        {appointment.appointmentStatus || "appointmentStatus"}
-      </div>
-    </div>
+    <tr className="hover:bg-slate-300 hover:bg-opacity-40 duration-100">
+      <td class="p-2">{appointment.fullName}</td>
+      <td class="p-2">{appointment.phone}</td>
+      <td class="p-2">{appointment.title}</td>
+      <td class="p-2">{appointment.appointedDate}</td>
+      <td class="p-2">{appointment.appointedTime}</td>
+      <td class="p-2">
+        <AppointmentBtn
+          status={appointment.appointmentStatus}
+          id={appointment.id}
+        />
+      </td>
+    </tr>
   );
 }
