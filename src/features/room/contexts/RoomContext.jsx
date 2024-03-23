@@ -21,6 +21,7 @@ export default function RoomContextProvider({ children }) {
   const [rooms, setRooms] = useState([]);
   const [dormFacilities, setDormFacilities] = useState({});
   const [latLong, setLatLong] = useState(initialLatLong);
+  const [vacantRooms, setVacantRooms] = useState([]);
 
   // console.log(dormRoom);
 
@@ -34,12 +35,26 @@ export default function RoomContextProvider({ children }) {
         setRooms(res.data.room);
         setDormFacilities(res.data.dormFacilities);
         setLatLong(res.data.latLong || initialLatLong);
+        console.log(latLong, "latLong");
       } catch (error) {
         console.log(error);
       }
     };
     fetchDormRoom();
     setInitialLoading(false);
+  }, [targetDormId]);
+
+  useEffect(() => {
+    const fetchVacantRooms = async () => {
+      try {
+        const res = await roomApi.getAllVacantRoom();
+        setVacantRooms(res.data);
+        console.log(res.data, "vacantRooms");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchVacantRooms();
   }, []);
 
   const calculateMinPrice = (rooms) => {
@@ -62,6 +77,7 @@ export default function RoomContextProvider({ children }) {
         latLong,
         calculateMinPrice,
         calculateMaxPrice,
+        vacantRooms,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ export default function DormAppointmentContainer() {
   const { dormAppointments } = useContext(AppointmentContext);
   console.log(dormAppointments);
   return (
-    <div className="bg-[#F1F5F9] px-20 h-content">
+    <div className="bg-[#F1F5F9] px-20 h-content overflow-auto pb-8">
       <div className="flex flex-col">
         <div className="text-2xl font-semibold pt-12 pb-2">{`รายการนัดหมายทั้งหมดของหอพัก ${authUser.dorms.dormName}`}</div>
         <div className="bg-white rounded-lg p-4">

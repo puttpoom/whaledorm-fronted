@@ -3,20 +3,23 @@ import Button from "../../../components/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAppointment from "../../../hooks/use-appointment";
-import useRoom from "../../../hooks/use-room";
-import GoogleMapRoom from "../../../components/GoogleMapRoom";
 import useAuth from "../../../hooks/use-auth";
 import Carousel from "../../../components/Carousel";
+import GoogleMapDorm from "../../../components/GoogleMapDorm";
+import useRoom from "../../../hooks/use-room";
 
 export default function AppointmentForm() {
   const navigate = useNavigate();
   const { authUser } = useAuth();
   const { userCreateAppointment, roomTarget } = useAppointment();
-  // console.log(roomTarget);
+  const { latLong } = useRoom();
+  console.log(latLong);
 
   const { dorm } = roomTarget;
   const dormName = dorm && dorm.dormName;
   const dormId = dorm && dorm.id;
+
+  console.log(dorm);
 
   const { id } = roomTarget;
   const { title } = roomTarget;
@@ -61,9 +64,8 @@ export default function AppointmentForm() {
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-row mt-6 gap-6">
       <div className="rounded-xl w-full h-auto">
-        {/* img or google map */}
         <img src="" alt="" />
-        {/* <GoogleMapRoom latLong={latLong} zoom={19} /> */}
+        <GoogleMapDorm latLong2={latLong} zoom={18} />
         {/* <Carousel /> */}
       </div>
       <div className="flex flex-col gap-4">

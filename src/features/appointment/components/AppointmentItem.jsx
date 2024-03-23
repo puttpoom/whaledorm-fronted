@@ -21,10 +21,11 @@ export default function AppointmentItem({ appointment }) {
       <td class="p-2">{appointment.title}</td>
       <td class="p-2">{appointment.appointedDate}</td>
       <td class="p-2">{appointment.appointedTime}</td>
-      <td class="p-2">
+      <td class="">
         <AppointmentBtn
-          status={appointment.appointmentStatus}
+          // appointment={appointment}
           id={appointment.id}
+          status={appointment.appointmentStatus}
         />
       </td>
     </tr>

@@ -8,13 +8,19 @@ import GoogleMapDorm from "../../../components/GoogleMapDorm";
 import useRoom from "../../../hooks/use-room";
 
 export default function DormRoomContainer() {
+  const { vacantRooms, dormRoom } = useRoom();
+  console.log(dormRoom.id, "DormRoom");
   const { latLong } = useRoom();
+  console.log(vacantRooms, vacantRooms.length, "VacantRooms");
+  const vacantRoomsNotOnDormRoomPage = vacantRooms.filter(
+    (room) => room.dorm.id !== dormRoom.id
+  );
   console.log(latLong);
   const lat = +latLong.split(",")[0];
   const long = +latLong.split(",")[1];
 
   return (
-    <div className="h-content overflow-auto grid grid-cols-[8fr_2fr] justify-self-center py-12 px-20 bg-[#F1F5F9] gap-4">
+    <div className="h-content overflow-auto grid grid-cols-[8fr_2fr] justify-self-center py-12 px-20 bg-[#F1F5F9] gap-4 max-lg:grid-cols-1">
       <div className="flex flex-col bg-white rounded-xl shadow-[0_1px_5px_rgb(0,0,0,0.1)] p-8">
         {/* Dorm Info */}
         <div className="flex flex-col gap-4">
@@ -40,12 +46,23 @@ export default function DormRoomContainer() {
         {/* Dorm Vacant Rooms  */}
         <RoomContainer />
       </div>
-      <div className="bg-white rounded-xl shadow-[0_1px_5px_rgb(0,0,0,0.1)] p-4">
-        <div>item 1</div>
-        <div>item 2</div>
-        <div>item 3</div>
-        <div>item 4</div>
-        <div>item 5</div>
+      <div className="bg-white rounded-xl shadow-[0_1px_5px_rgb(0,0,0,0.1)] max-lg:hidden overflow-hidden">
+        <div>
+          {vacantRoomsNotOnDormRoomPage.slice(0, 16).map((room) => (
+            <div className="flex gap-2 p-2 border-b hover:bg-slate-200 hover:bg-opacity-45">
+              <img
+                src={room.roomImages}
+                alt=""
+                className="size-24 rounded-lg"
+              />
+              <div className="flex flex-col gap-2 justify-center">
+                <span className="font-semibold">{room.dorm.dormName}</span>
+                <span className="text-sm line-clamp-1">{room.title}</span>
+                <span className="text-sm">{room.price} บาท/เดือน</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ export const AppointmentContext = createContext();
 export default function AppointmentContextProvider({ children }) {
   const { authUser } = useAuth();
   const { targetRoomId } = useParams();
+  // console.log(targetRoomId, "targetRoomId");
 
   const [roomTarget, setRoomTarget] = useState(initialRoom);
   const [appointments, setAppointment] = useState([]);
@@ -130,32 +131,43 @@ export default function AppointmentContextProvider({ children }) {
     const res = await appointmentApi.dormUpdateAppointment(appointmentId);
   };
 
-  const handleClickResponBtn = async (appointmentId, appointmentData) => {
+  const handleClickResponBtn = async (
+    appointmentId,
+    // appointmentData,
+    updatedaAppointmentData
+  ) => {
     MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "คุณแน่ใจหรือไม่?",
+      text: `ยืนยันการนัดหมาย`,
       icon: "warning",
+      showDenyButton: true,
       showCancelButton: true,
+      // denyButtonText: "#d33",
       confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      cancelButtonColor: "#808080",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ละทิ้ง",
+      denyButtonText: "ยกเลิกการนัดหมาย",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await appointmentApi.dormUpdateAppointment(
           appointmentId,
-          appointmentData
+          updatedaAppointmentData
         );
         setDormAppointments(
           dormAppointments.map((app) =>
-            app.id === appointmentId ? { ...app, ...appointmentData } : app
+            app.id === appointmentId
+              ? { ...app, ...updatedaAppointmentData }
+              : app
           )
         );
-        // console.log(res);
         MySwal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          title: "ยืนยันการนัดหมาย!",
+          // text: "Your file has been deleted.",
           icon: "success",
         });
+      } else if (result.isDenied) {
+        console.log("deny");
       }
     });
   };
