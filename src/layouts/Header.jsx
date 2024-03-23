@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <header
-      className={`flex bg-white shadow-md justify-between items-center px-24 py-2 w-full z-50 h-16 ${
+      className={`flex bg-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.05)] justify-between items-center px-24 py-2 w-full z-50 h-16 ${
         isScrolled ? "sticky top-0" : ""
       }`}
     >

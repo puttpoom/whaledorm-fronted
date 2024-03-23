@@ -5,6 +5,7 @@ import {
   Trash2,
   PenSquareIcon,
   CheckSquare,
+  Ban,
 } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
 import useAppointment from "../../src/hooks/use-appointment";
@@ -26,25 +27,22 @@ export default function RoomCard({
   const checkStatus = (statusBtn) => {
     switch (statusBtn) {
       case "PEDNING":
-        // let pendening = "pendingBtn";
         return (
           <p className="flex items-center gap-2">
             รอการตอบรับ <Clock className="inline" size={18} />
           </p>
         );
       case "CONFIRM":
-        // let accepted = "approveBtn";
         return (
           <p className="flex items-center gap-2">
-            การนัดหมายได้รับการยืนยันแล้ว{" "}
+            การนัดหมายไดเรับการยืนยันแล้ว{" "}
             <CheckSquare className="inline" size={18} />
           </p>
         );
-      case "CALCELED":
-        // let rejected = "cancledBtn";
+      case "CANCLED":
         return (
           <p className="flex items-center gap-2">
-            ถูกปฏิเสธ <Ban className="inline" size={18} />
+            การนัดหมายถูกยกเลิก <Ban className="inline" size={18} />
           </p>
         );
       default:
@@ -125,7 +123,7 @@ export default function RoomCard({
           ) : null}
           {isShowDeleteBtn ? (
             <Button
-              color="red2"
+              color="gray"
               text="white"
               textSize="sm"
               width="full"

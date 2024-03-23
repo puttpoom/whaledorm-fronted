@@ -1,11 +1,12 @@
 const bgClasses = {
+  gray: "bg-gray-500",
   blue: "bg-blue-900",
   red: "bg-white",
   green: "bg-green-500",
   red2: "bg-red-600",
   bookBtn: "bg-[#577CFF]",
   PEDNING: "bg-yellow-500",
-  CANCLED: "bg-red-500",
+  CANCLED: "bg-red-600",
   CONFIRM: "bg-green-500",
 };
 
