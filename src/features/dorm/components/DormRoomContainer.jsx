@@ -39,9 +39,12 @@ export default function DormRoomContainer() {
               <Button color="red2" text="white" width="full">
                 รายงานหอพัก
               </Button>
-              <span className="text-red-600 text-sm text-center">
+              <Button color="red2" text="white" width="full">
+                รายงานหอพัก
+              </Button>
+              {/* <span className="text-red-600 text-sm text-center">
                 Warning...
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
