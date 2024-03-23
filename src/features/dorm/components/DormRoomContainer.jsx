@@ -6,16 +6,18 @@ import RoomContainer from "../../../features/room/components/RoomContainer";
 import GoogleMapsEmbed from "../../../components/GoogleMapFrame";
 import GoogleMapDorm from "../../../components/GoogleMapDorm";
 import useRoom from "../../../hooks/use-room";
+import { Link } from "react-router-dom";
 
 export default function DormRoomContainer() {
   const { vacantRooms, dormRoom } = useRoom();
-  console.log(dormRoom.id, "DormRoom");
   const { latLong } = useRoom();
-  console.log(vacantRooms, vacantRooms.length, "VacantRooms");
+
+  // console.log(vacantRooms, vacantRooms.length, "VacantRooms");
   const vacantRoomsNotOnDormRoomPage = vacantRooms.filter(
     (room) => room.dorm.id !== dormRoom.id
   );
-  console.log(latLong);
+
+  // console.log(latLong);
   const lat = +latLong.split(",")[0];
   const long = +latLong.split(",")[1];
 
@@ -49,18 +51,20 @@ export default function DormRoomContainer() {
       <div className="bg-white rounded-xl shadow-[0_1px_5px_rgb(0,0,0,0.1)] max-lg:hidden overflow-hidden">
         <div>
           {vacantRoomsNotOnDormRoomPage.slice(0, 16).map((room) => (
-            <div className="flex gap-2 p-2 border-b hover:bg-slate-200 hover:bg-opacity-45">
-              <img
-                src={room.roomImages}
-                alt=""
-                className="size-24 rounded-lg"
-              />
-              <div className="flex flex-col gap-2 justify-center">
-                <span className="font-semibold">{room.dorm.dormName}</span>
-                <span className="text-sm line-clamp-1">{room.title}</span>
-                <span className="text-sm">{room.price} บาท/เดือน</span>
+            <Link to={`/dorm/rooms/appointment/${room.id}`} key={room.id}>
+              <div className="flex gap-2 p-2 border-b hover:bg-[#F4F4F4]">
+                <img
+                  src={room.roomImages}
+                  alt=""
+                  className="size-24 rounded-lg"
+                />
+                <div className="flex flex-col gap-2 justify-center">
+                  <span className="font-semibold">{room.dorm.dormName}</span>
+                  <span className="text-sm line-clamp-1">{room.title}</span>
+                  <span className="text-sm">{room.price} บาท/เดือน</span>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
