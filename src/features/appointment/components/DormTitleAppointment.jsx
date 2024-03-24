@@ -7,7 +7,7 @@ export default function DormTitleAppointment({ roomTarget }) {
   const location = dorm && dorm.location;
   const distance = dorm && dorm.distance;
 
-  console.log(distance);
+  // console.log(distance);
 
   return (
     <div>
