@@ -7,7 +7,7 @@ const GoogleMapFrame = () => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API_KEY,
   });
   const { latLong } = useRoom();
-  console.log(latLong);
+  // console.log(latLong);
   const lat = +latLong.split(",")[0];
   const long = +latLong.split(",")[1];
 

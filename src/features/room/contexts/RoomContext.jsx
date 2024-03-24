@@ -28,20 +28,23 @@ export default function RoomContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDormRoom = async () => {
-      try {
-        const res = await roomApi.getDormByDormId(targetDormId);
-        setDormRoom(res.data);
-        setRooms(res.data.room);
-        setDormFacilities(res.data.dormFacilities);
-        setLatLong(res.data.latLong || initialLatLong);
-        console.log(latLong, "latLong");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDormRoom();
-    setInitialLoading(false);
+    if (targetDormId) {
+      const fetchDormRoom = async () => {
+        try {
+          const res = await roomApi.getDormByDormId(targetDormId);
+          setDormRoom(res.data);
+          setRooms(res.data.room);
+          setDormFacilities(res.data.dormFacilities);
+          setLatLong(res.data.latLong || initialLatLong);
+          console.log(latLong, "latLong");
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setInitialLoading(false);
+        }
+      };
+      fetchDormRoom();
+    }
   }, [targetDormId]);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function RoomContextProvider({ children }) {
       try {
         const res = await roomApi.getAllVacantRoom();
         setVacantRooms(res.data);
-        console.log(res.data, "vacantRooms");
+        // console.log(res.data, "vacantRooms");
       } catch (error) {
         console.log(error);
       }

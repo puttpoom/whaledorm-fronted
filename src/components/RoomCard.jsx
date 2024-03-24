@@ -83,7 +83,7 @@ export default function RoomCard({
         </span>
         <span className="flex w-full justify-start gap-2 items-center">
           {isShowBookBtn ? (
-            <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
+            <Link to={`/appointment/${rooms.id}`}>
               <Button
                 color="bookBtn"
                 text="white"

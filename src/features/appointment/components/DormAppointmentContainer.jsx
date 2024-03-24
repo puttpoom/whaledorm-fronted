@@ -6,7 +6,7 @@ import useAuth from "../../../hooks/use-auth";
 export default function DormAppointmentContainer() {
   const { authUser } = useAuth();
   const { dormAppointments } = useContext(AppointmentContext);
-  console.log(dormAppointments);
+  // console.log(dormAppointments);
   return (
     <div className="bg-[#F1F5F9] px-20 h-content overflow-auto pb-8">
       <div className="flex flex-col">

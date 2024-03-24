@@ -39,9 +39,9 @@ export default function DormRoomContainer() {
               <Button color="red2" text="white" width="full">
                 รายงานหอพัก
               </Button>
-              <Button color="red2" text="white" width="full">
+              {/*<Button color="red2" text="white" width="full">
                 รายงานหอพัก
-              </Button>
+              </Button>*/}
               {/* <span className="text-red-600 text-sm text-center">
                 Warning...
               </span> */}
@@ -54,7 +54,7 @@ export default function DormRoomContainer() {
       <div className="bg-white rounded-xl shadow-[0_1px_5px_rgb(0,0,0,0.1)] max-lg:hidden overflow-hidden">
         <div>
           {vacantRoomsNotOnDormRoomPage.slice(0, 16).map((room) => (
-            <Link to={`/dorm/rooms/appointment/${room.id}`} key={room.id}>
+            <Link to={`/appointment/${room.id}`} key={room.id}>
               <div className="flex gap-2 p-2 border-b hover:bg-[#F4F4F4]">
                 <img
                   src={room.roomImages}

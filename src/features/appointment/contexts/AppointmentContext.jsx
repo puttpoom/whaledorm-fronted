@@ -7,7 +7,7 @@ import MySwal from "../../../utills/sweetaleart";
 import useAuth from "../../../hooks/use-auth";
 
 const initialRoom = {
-  id: 1,
+  id: null,
   title: "",
   info: "",
   roomImages:
@@ -33,17 +33,20 @@ export default function AppointmentContextProvider({ children }) {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    const fetchRoomByRoomId = async () => {
-      try {
-        const res = await roomApi.getRoomByRoomId(targetRoomId);
-        setRoomTarget(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRoomByRoomId();
-    setInitialLoading(false);
+    if (targetRoomId) {
+      const fetchRoomByRoomId = async () => {
+        try {
+          const res = await roomApi.getRoomByRoomId(targetRoomId);
+          setRoomTarget(res.data);
+          // console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setInitialLoading(false);
+        }
+      };
+      fetchRoomByRoomId();
+    }
   }, [targetRoomId]);
 
   useEffect(() => {
@@ -53,7 +56,7 @@ export default function AppointmentContextProvider({ children }) {
           const res = await appointmentApi.getAllAppointmentByDormId(
             authUser.dorms.id
           );
-          console.log(res.data);
+          // console.log(res.data);
           setDormAppointments(res.data);
         } catch (err) {
           console.log(err);
