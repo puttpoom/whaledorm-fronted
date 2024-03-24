@@ -6,6 +6,7 @@ export default function Input({
   value,
   disabled,
   max,
+  className,
 }) {
   return (
     <input
@@ -14,7 +15,7 @@ export default function Input({
       value={value}
       type={type}
       placeholder={placeholder}
-      className="border border-blue-300 rounded-lg px-4 h-10 w-full focus:outline-2 outline-blue-200"
+      className={`border border-blue-300 rounded-lg px-4 h-10 w-full focus:outline-2 outline-blue-200 ${className}`}
       onChange={onChange}
       disabled={disabled}
     />

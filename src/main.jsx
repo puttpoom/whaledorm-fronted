@@ -10,7 +10,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
     <AppointmentContextProvider>
       <RoomContextProvider>
-        <App />
+        <DormContextProvider>
+          <App />
+        </DormContextProvider>
       </RoomContextProvider>
     </AppointmentContextProvider>
   </AuthContextProvider>

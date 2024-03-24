@@ -21,7 +21,7 @@ export default function DormPage() {
   console.log(authUser.dorms);
   return (
     <>
-      {authUser.dorms ? <p>registerd dorm</p> : <p>un registered dorm</p>}
+      {/* {authUser.dorms ? <p>registerd dorm</p> : <p>un registered dorm</p>} */}
       <CreateRoomForm />
     </>
   );
