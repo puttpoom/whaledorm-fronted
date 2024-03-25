@@ -10,16 +10,15 @@ import { Link } from "react-router-dom";
 
 export default function DormRoomContainer() {
   const { vacantRooms, dormRoom } = useRoom();
-  const { latLong } = useRoom();
+  // const { latLong } = useRoom();
 
-  // console.log(vacantRooms, vacantRooms.length, "VacantRooms");
   const vacantRoomsNotOnDormRoomPage = vacantRooms.filter(
     (room) => room.dorm.id !== dormRoom.id
   );
 
   // console.log(latLong);
-  const lat = +latLong.split(",")[0];
-  const long = +latLong.split(",")[1];
+  // const lat = +latLong.split(",")[0];
+  // const long = +latLong.split(",")[1];
 
   return (
     <div className="h-content overflow-auto grid grid-cols-[8fr_2fr] justify-self-center py-12 px-20 bg-[#F1F5F9] gap-4 max-lg:grid-cols-1">
@@ -28,7 +27,7 @@ export default function DormRoomContainer() {
         <div className="flex flex-col gap-4">
           <DormTitle />
           <div className="flex-1">
-            <GoogleMapDorm lat={lat} lng={long} zoom={18} />
+            <GoogleMapDorm />
           </div>
           <div className=" grid grid-cols-[6fr_4fr]">
             <DormFacilities />

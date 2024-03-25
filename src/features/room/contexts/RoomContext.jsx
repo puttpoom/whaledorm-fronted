@@ -16,6 +16,7 @@ const initialLatLong = "13.81917867313595, 100.51444298065579";
 
 export default function RoomContextProvider({ children }) {
   const { targetDormId } = useParams();
+  console.log(targetDormId, "targetDormId");
 
   const [dormRoom, setDormRoom] = useState({});
   const [rooms, setRooms] = useState([]);
@@ -31,7 +32,7 @@ export default function RoomContextProvider({ children }) {
     if (targetDormId) {
       const fetchDormRoom = async () => {
         try {
-          const res = await roomApi.getDormByDormId(targetDormId);
+          const res = await roomApi.getDormByUserId(targetDormId);
           setDormRoom(res.data);
           setRooms(res.data.room);
           setDormFacilities(res.data.dormFacilities);
