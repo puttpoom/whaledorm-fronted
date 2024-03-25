@@ -7,15 +7,11 @@ const GoogleMapDorm = ({ latLong2, zoom }) => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API_KEY,
   });
   const { latLong } = useRoom();
-  // console.log(latLong, "GoolgeMapDorm");
+
   const lat = +latLong.split(",")[0];
   const long = +latLong.split(",")[1];
 
   const center = { lat: lat, lng: long };
-  // ตำแหน่งศูนย์กลางของวงกลม
-  //   13.819246400969833, 100.51442149372211;
-
-  // รัศมีของวงกลม (เป็นเมตร)
   const radius = 800; // เช่น 10 กิโลเมตร
 
   return (

@@ -17,6 +17,7 @@ export default function AppointmentForm({ room }) {
   const { dorm } = roomTarget;
   const dormName = dorm && dorm.dormName;
   const dormId = dorm && dorm.id;
+  console.log(dormId, "dormIaaaaaad");
 
   const { id } = roomTarget;
   const { title } = roomTarget;
@@ -62,7 +63,7 @@ export default function AppointmentForm({ room }) {
     <form onSubmit={handleSubmitForm} className="flex flex-row mt-6 gap-6">
       <div className="rounded-xl w-full h-auto">
         <img src="" alt="" />
-        <GoogleMapAppointment room={room} />
+        <GoogleMapAppointment dormId={dormId} />
         {/* <Carousel /> */}
       </div>
       <div className="flex flex-col gap-4">
