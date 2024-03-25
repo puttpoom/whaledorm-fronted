@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
+import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+
+// import { joiResolver } from "hookform/resolvers/joi";
 import useDorm from "../../../hooks/use-dorm";
 import { useForm } from "react-hook-form";
-import Button from "../../../components/Button";
 
 const initial = {};
 
@@ -34,31 +36,54 @@ const initial = {};
 
 export default function CreateRoomForm() {
   const InputDormImgEl = useRef();
-  const { register, handleSubmit } = useForm();
+
+  const handleSubmitForm = async (data) => {
+    console.log(data);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    // resolver: joiResolver(createPostSchema),
+  });
+
   return (
     <div className="flex flex-col bg-[#F1F5F9] h-content overflow-auto pt-24 px-16">
       <div className=" bg-white rounded-md p-16">
-        <form className="flex flex-col gap-2 w-[30vw]">
+        <form
+          className="flex flex-col gap-2 w-[30vw]"
+          onSubmit={handleSubmit(handleSubmitForm)}
+        >
           Dorm Register
           <input type="file" className="hidden" ref={InputDormImgEl} />
-          <Input placeholder="ชื่อหอพัก" />
-          <Input placeholder="เบอร์โทรศัพท์" />
+          <Input placeholder="ชื่อหอพัก" register={register("dormName")} />
+          <Input placeholder="เบอร์โทรศัพท์" register={register("phone")} />
           <textarea
             placeholder="ที่อยู่"
             rows={2}
             className="p-4 border border-blue-300 rounded-lg focus:outline-2 outline-blue-200"
+            register={register("location")}
           />
-          <Input placeholder="ค่าไฟฟ้าต่อหน่วย" />
-          <Input placeholder="ค่าน้ำต่อหน่วย" />
+          <Input
+            placeholder="ค่าน้ำต่อหน่วย"
+            register={register("waterUnit")}
+          />
+          <Input
+            placeholder="ค่าไฟฟ้าต่อหน่วย"
+            register={register("electricalUnit")}
+          />
           <Button
             type="button"
             onClick={() => InputDormImgEl.current.click()}
             className=" text-white bg-blue-500"
+            register={{ ...register("dormImages") }}
           >
             อัพโหลดรูปหอพัก
           </Button>
           <Button
-            type="button"
+            type="submit"
             onClick={() => InputDormImgEl.current.click()}
             className=" text-white bg-blue-900"
           >
