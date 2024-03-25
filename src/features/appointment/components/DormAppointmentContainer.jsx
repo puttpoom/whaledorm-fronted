@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import AppointmentItem from "./AppointmentItem";
 import useAuth from "../../../hooks/use-auth";
 import * as appointmentApi from "../../../api/appointment";
+import useAppointment from "../../../hooks/use-appointment";
 
 export default function DormAppointmentContainer() {
   const { authUser } = useAuth();
-  // const { dormAppointments } = useAppointment();
+  const { updateAppointmentData } = useAppointment();
   const [dormAppointments, setDormAppointments] = useState([]);
   console.log(authUser, "adadasdwdascacawsasdqwascawdasdwdasdawdacawdasd");
 
@@ -25,7 +26,7 @@ export default function DormAppointmentContainer() {
       fetchDormAppointmentById();
       // setInitialLoading(false);
     }
-  }, []);
+  }, [updateAppointmentData]);
 
   return (
     <div className="bg-[#F1F5F9] px-20 h-content overflow-auto pb-8">

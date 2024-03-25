@@ -29,6 +29,7 @@ export default function AppointmentContextProvider({ children }) {
   const [roomTarget, setRoomTarget] = useState(initialRoom);
   const [userAppointments, setUserAppointments] = useState([]);
   const [dormAppointments, setDormAppointments] = useState([]);
+  const [updateAppointmentData, setUpdateAppointmentData] = useState({});
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -115,6 +116,18 @@ export default function AppointmentContextProvider({ children }) {
     const res = await appointmentApi.dormUpdateAppointment(appointmentId);
   };
 
+  const updateAppointment = async (appointmentId, updatedaAppointmentData) => {
+    const res = await appointmentApi.dormUpdateAppointment(
+      appointmentId,
+      updatedaAppointmentData
+    );
+    setUpdateAppointmentData(
+      dormAppointments.map((app) =>
+        app.id === appointmentId ? { ...app, ...updatedaAppointmentData } : app
+      )
+    );
+  };
+
   const handleClickResponBtn = async (
     appointmentId,
     // appointmentData,
@@ -134,24 +147,17 @@ export default function AppointmentContextProvider({ children }) {
       denyButtonText: "ยกเลิกการนัดหมาย",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await appointmentApi.dormUpdateAppointment(
-          appointmentId,
-          updatedaAppointmentData
-        );
-        setDormAppointments(
-          dormAppointments.map((app) =>
-            app.id === appointmentId
-              ? { ...app, ...updatedaAppointmentData }
-              : app
-          )
-        );
+        updateAppointment(appointmentId, updatedaAppointmentData);
         MySwal.fire({
           title: "ยืนยันการนัดหมาย!",
-          // text: "Your file has been deleted.",
           icon: "success",
         });
       } else if (result.isDenied) {
-        console.log("deny");
+        updateAppointment(appointmentId, updatedaAppointmentData);
+        MySwal.fire({
+          title: "ยกเลิกการนัดหมาย!",
+          icon: "error",
+        });
       }
     });
   };
@@ -168,6 +174,7 @@ export default function AppointmentContextProvider({ children }) {
         userAppointments,
         dormUpdateAppointment,
         handleClickResponBtn,
+        updateAppointmentData,
       }}
     >
       {children}
