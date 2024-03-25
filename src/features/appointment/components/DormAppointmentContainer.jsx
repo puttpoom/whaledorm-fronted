@@ -1,13 +1,31 @@
-import { useContext, useEffect } from "react";
+import { useEffect, useState } from "react";
 import AppointmentItem from "./AppointmentItem";
-import { AppointmentContext } from "../contexts/AppointmentContext";
 import useAuth from "../../../hooks/use-auth";
-import * as authApi from "../../../api/auth";
+import * as appointmentApi from "../../../api/appointment";
 
 export default function DormAppointmentContainer() {
   const { authUser } = useAuth();
-  const { dormAppointments } = useContext(AppointmentContext);
+  // const { dormAppointments } = useAppointment();
+  const [dormAppointments, setDormAppointments] = useState([]);
   console.log(authUser, "adadasdwdascacawsasdqwascawdasdwdasdawdacawdasd");
+
+  useEffect(() => {
+    if (authUser.role === "DORM") {
+      const fetchDormAppointmentById = async () => {
+        try {
+          const res = await appointmentApi.getAllAppointmentByDormId(
+            authUser.dorms.id
+          );
+          // console.log(res.data);
+          setDormAppointments(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchDormAppointmentById();
+      // setInitialLoading(false);
+    }
+  }, []);
 
   return (
     <div className="bg-[#F1F5F9] px-20 h-content overflow-auto pb-8">
