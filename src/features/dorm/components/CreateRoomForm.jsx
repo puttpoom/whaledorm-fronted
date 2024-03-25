@@ -2,9 +2,10 @@ import React, { useRef } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 
-// import { joiResolver } from "hookform/resolvers/joi";
 import useDorm from "../../../hooks/use-dorm";
 import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { validateRegisterDorm } from "./validations/validate-registerdorm";
 
 const initial = {};
 
@@ -37,17 +38,23 @@ const initial = {};
 export default function CreateRoomForm() {
   const InputDormImgEl = useRef();
 
-  const handleSubmitForm = async (data) => {
-    console.log(data);
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // resolver: joiResolver(createPostSchema),
+    resolver: joiResolver(validateRegisterDorm),
   });
+
+  const handleSubmitForm = async (data) => {
+    const formData = new FormData();
+    formData.append("dormName", data.dormName);
+    formData.append("phone", data.phone);
+    formData.append("location", data.location);
+    formData.append("waterUnit", data.waterUnit);
+    formData.append("electricalUnit", data.electricalUnit);
+    formData.append("dormImages", data.dormImages[0]);
+  };
 
   return (
     <div className="flex flex-col bg-[#F1F5F9] h-content overflow-auto pt-24 px-16">
