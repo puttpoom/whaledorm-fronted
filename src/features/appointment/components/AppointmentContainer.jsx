@@ -6,7 +6,6 @@ import DormTitleAppointment from "./DormTitleAppointment";
 
 export default function AppointmentContainer() {
   const { roomTarget } = useAppointment();
-  // console.log(roomTarget, "roomTarget");
   return (
     <div className="flex flex-col justify-self-center py-12 px-20 bg-[#F1F5F9] gap-4 h-content overflow-auto">
       <div className="flex flex-col w-[80vw] bg-white rounded-xl p-8 mx-auto gap-4">

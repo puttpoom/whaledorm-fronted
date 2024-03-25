@@ -27,6 +27,7 @@ export default function AuthContextProvider({ children }) {
           .fetchMe()
           .then((res) => {
             setAuthUser(res.data.user);
+            console.log(res.data.user);
           })
           .catch((err) => {
             console.log(err.response?.data.message);
@@ -38,7 +39,7 @@ export default function AuthContextProvider({ children }) {
       }
     };
     fetchAuth();
-  }, []);
+  }, [initialLoading]);
 
   const register = async (user) => {
     const res = await authApi.register(user);

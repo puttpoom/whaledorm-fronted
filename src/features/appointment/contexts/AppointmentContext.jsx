@@ -27,7 +27,6 @@ export default function AppointmentContextProvider({ children }) {
   // console.log(targetRoomId, "targetRoomId");
 
   const [roomTarget, setRoomTarget] = useState(initialRoom);
-  const [appointments, setAppointment] = useState([]);
   const [userAppointments, setUserAppointments] = useState([]);
   const [dormAppointments, setDormAppointments] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -48,24 +47,6 @@ export default function AppointmentContextProvider({ children }) {
       fetchRoomByRoomId();
     }
   }, [targetRoomId]);
-
-  useEffect(() => {
-    if (authUser.role === "DORM") {
-      const fetchDormAppointmentById = async () => {
-        try {
-          const res = await appointmentApi.getAllAppointmentByDormId(
-            authUser.dorms.id
-          );
-          // console.log(res.data);
-          setDormAppointments(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchDormAppointmentById();
-      setInitialLoading(false);
-    }
-  }, [authUser.role]);
 
   useEffect(() => {
     const fetchUserAppointments = async () => {
@@ -183,7 +164,6 @@ export default function AppointmentContextProvider({ children }) {
         userDeleteAppointment,
         initialLoading,
         targetRoomId,
-        appointments,
         dormAppointments,
         userAppointments,
         dormUpdateAppointment,

@@ -34,7 +34,7 @@ export default function DormRoomContainer() {
             <DormFacilities />
             <div className="grid grid-flow-row items-center content-center gap-2 justify-self-stretch">
               <Button color="green" text="white" width="full">
-                0123456xxx
+                {dormRoom.phone}
               </Button>
               <Button color="red2" text="white" width="full">
                 รายงานหอพัก
