@@ -26,21 +26,33 @@ import Joi from "joi";
 }
 */
 
-export const validateRegisterDorm = Joi.object({
+export const registerDormSchema = Joi.object({
   dorm: Joi.object({
-    distance: Joi.string().required(),
-    electricalUnit: Joi.number().required(),
-    waterUnit: Joi.number().required(),
+    dormName: Joi.string().required().messages({
+      "string.empty": "กรุณากรอกข้อมูล",
+    }),
+    phone: Joi.string().required().messages({
+      "string.empty": "กรุณากรอกข้อมูล",
+    }),
+    location: Joi.string().required().messages({
+      "string.empty": "กรุณากรอกข้อมูล",
+    }),
+    electricalUnit: Joi.number().required().messages({
+      "number.base": "กรุณากรอกข้อมูล",
+    }),
+    waterUnit: Joi.number().required().messages({
+      "number.base": "กรุณากรอกข้อมูล",
+    }),
     // isVerify: Joi.string().valid("PEDNING").required(),
   }),
-  dormFacilities: Joi.object({
-    isParking: Joi.boolean().required(),
-    isKeyCard: Joi.boolean().required(),
-    isLift: Joi.boolean().required(),
-    isInternet: Joi.boolean().required(),
-    isCCTV: Joi.boolean().required(),
-    isLundary: Joi.boolean().required(),
-    isWaterDispenser: Joi.boolean().required(),
-    isMart: Joi.boolean().required(),
-  }),
+  // dormFacilities: Joi.object({
+  //   isParking: Joi.boolean().required(),
+  //   isKeyCard: Joi.boolean().required(),
+  //   isLift: Joi.boolean().required(),
+  //   isInternet: Joi.boolean().required(),
+  //   isCCTV: Joi.boolean().required(),
+  //   isLundary: Joi.boolean().required(),
+  //   isWaterDispenser: Joi.boolean().required(),
+  //   isMart: Joi.boolean().required(),
+  // }),
 });

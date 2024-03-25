@@ -5,7 +5,7 @@ import Input from "../../../components/Input";
 import useDorm from "../../../hooks/use-dorm";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { validateRegisterDorm } from "./validations/validate-registerdorm";
+import { registerDormSchema } from "./validations/validate-registerdorm";
 
 const initial = {};
 
@@ -43,7 +43,7 @@ export default function CreateRoomForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: joiResolver(validateRegisterDorm),
+    resolver: joiResolver(registerDormSchema),
   });
 
   const handleSubmitForm = async (data) => {
@@ -53,7 +53,7 @@ export default function CreateRoomForm() {
     formData.append("location", data.location);
     formData.append("waterUnit", data.waterUnit);
     formData.append("electricalUnit", data.electricalUnit);
-    formData.append("dormImages", data.dormImages[0]);
+    // formData.append("dormImages", data.dormImages[0]);
   };
 
   return (
@@ -65,19 +65,30 @@ export default function CreateRoomForm() {
         >
           Dorm Register
           <input type="file" className="hidden" ref={InputDormImgEl} />
-          <Input placeholder="ชื่อหอพัก" register={register("dormName")} />
-          <Input placeholder="เบอร์โทรศัพท์" register={register("phone")} />
+          <Input
+            name="dormName"
+            placeholder="ชื่อหอพัก"
+            register={register("dormName")}
+          />
+          <Input
+            name="phone"
+            placeholder="เบอร์โทรศัพท์"
+            register={register("phone")}
+          />
           <textarea
+            name="location"
             placeholder="ที่อยู่"
             rows={2}
             className="p-4 border border-blue-300 rounded-lg focus:outline-2 outline-blue-200"
             register={register("location")}
           />
           <Input
+            name="waterUnit"
             placeholder="ค่าน้ำต่อหน่วย"
             register={register("waterUnit")}
           />
           <Input
+            name="electricalUnit"
             placeholder="ค่าไฟฟ้าต่อหน่วย"
             register={register("electricalUnit")}
           />
@@ -91,7 +102,7 @@ export default function CreateRoomForm() {
           </Button>
           <Button
             type="submit"
-            onClick={() => InputDormImgEl.current.click()}
+            // onClick={() => InputDormImgEl.current.click()}
             className=" text-white bg-blue-900"
           >
             สมัครหอพัก
