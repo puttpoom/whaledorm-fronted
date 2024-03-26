@@ -14,6 +14,7 @@ import ErrorText from "../component/ErrorText";
 //middleWares
 import validateLogin from "../validations/validate-login";
 import MySwal from "../../../utills/sweetaleart";
+import { GoogleLogin } from "@react-oauth/google";
 
 const initial = {
   email: "",
@@ -121,6 +122,10 @@ export default function LoginForm() {
           <Button color="blue" text="white" width="full">
             ลงชื่อเข้าใช้
           </Button>
+          <GoogleLogin
+            onSuccess={() => console.log("Login success fulluy")}
+            onError={() => console.log("Login success errors")}
+          />
           <div className="flex text-sm gap-2">
             <div className="text-gray-400">ยังไม่มีบัญชีผู้ใช้ ?</div>
             <div

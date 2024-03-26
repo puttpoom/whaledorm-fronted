@@ -135,7 +135,7 @@ export default function AppointmentContextProvider({ children }) {
   ) => {
     MySwal.fire({
       title: "คุณแน่ใจหรือไม่?",
-      text: `ยืนยันการนัดหมาย`,
+      text: ``,
       icon: "warning",
       showDenyButton: true,
       showCancelButton: true,
