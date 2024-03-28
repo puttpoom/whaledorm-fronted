@@ -15,6 +15,9 @@ import ErrorText from "../component/ErrorText";
 import validateLogin from "../validations/validate-login";
 import MySwal from "../../../utills/sweetaleart";
 import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import * as authApi from "../../../api/auth";
+import { storeToken } from "../../../utills/local-storage";
 
 const initial = {
   email: "",
@@ -33,7 +36,11 @@ export default function LoginForm() {
     isOpenLoginForm,
     setIsOpenRegisterForm,
     googleLogin,
-    googleRegister,
+    setAuthUser,
+    googleUser,
+    authUser,
+    googleToken,
+    fetchGoogleAuth,
   } = useAuth();
 
   useEffect(() => {
@@ -82,11 +89,13 @@ export default function LoginForm() {
     setIsShowPassword((prv) => !prv);
   };
 
+  //when success google res token
   const handleGoogleLoginSuccess = async (res) => {
     try {
       console.log(res);
       await googleLogin(res);
       setIsOpenLoginForm(false);
+      // console.log(profile);
     } catch (err) {
       console.log(err);
     }

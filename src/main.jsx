@@ -8,7 +8,7 @@ import GoogleMapContextProvider from "./features/map/contexts/GoogleMapContext.j
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_LOGIN_CLIENT_ID}>
+  <GoogleOAuthProvider clientId="427204996136-m56284arl4oousd3f2pnhhs4iihdffgr.apps.googleusercontent.com">
     <AuthContextProvider>
       <AppointmentContextProvider>
         <GoogleMapContextProvider>

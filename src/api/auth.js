@@ -6,5 +6,3 @@ export const fetchMe = () => axios.get("/auth/me");
 
 export const googleLogin = (credential) =>
   axios.post("/auth/google/login", credential);
-// export const googleRegister = (credential) =>
-//   axios.post("/auth/google/register", credential);
