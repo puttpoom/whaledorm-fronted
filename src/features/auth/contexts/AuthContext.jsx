@@ -83,6 +83,18 @@ export default function AuthContextProvider({ children }) {
     });
   };
 
+  const googleRegister = async (credential) => {
+    const res = await authApi.googleRegister(credential);
+    setAuthUser(res.data.user);
+    storeToken(res.data.accessToken);
+  };
+
+  const googleLogin = async (credential) => {
+    const res = await authApi.googleLogin(credential);
+    setAuthUser(res.data.user);
+    storeToken(res.data.accessToken);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -95,6 +107,8 @@ export default function AuthContextProvider({ children }) {
         setIsOpenRegisterForm,
         isOpenLoginForm,
         setIsOpenLoginForm,
+        googleRegister,
+        googleLogin,
       }}
     >
       {children}

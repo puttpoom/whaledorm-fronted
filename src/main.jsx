@@ -2,14 +2,13 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import AuthContextProvider from "./features/auth/contexts/AuthContext.jsx";
-import DormContextProvider from "./features/dorm/contexts/DormContext.jsx";
 import AppointmentContextProvider from "./features/appointment/contexts/AppointmentContext.jsx";
 import RoomContextProvider from "./features/room/contexts/RoomContext.jsx";
 import GoogleMapContextProvider from "./features/map/contexts/GoogleMapContext.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId="427204996136-m56284arl4oousd3f2pnhhs4iihdffgr.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_LOGIN_CLIENT_ID}>
     <AuthContextProvider>
       <AppointmentContextProvider>
         <GoogleMapContextProvider>

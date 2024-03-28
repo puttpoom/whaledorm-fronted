@@ -27,8 +27,14 @@ export default function LoginForm() {
   const [error, setError] = useState({});
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const { login, setIsOpenLoginForm, isOpenLoginForm, setIsOpenRegisterForm } =
-    useAuth();
+  const {
+    login,
+    setIsOpenLoginForm,
+    isOpenLoginForm,
+    setIsOpenRegisterForm,
+    googleLogin,
+    googleRegister,
+  } = useAuth();
 
   useEffect(() => {
     if (isOpenLoginForm) {
@@ -74,6 +80,20 @@ export default function LoginForm() {
 
   const handleShowPassword = (e) => {
     setIsShowPassword((prv) => !prv);
+  };
+
+  const handleGoogleLoginSuccess = async (res) => {
+    try {
+      console.log(res);
+      await googleLogin(res);
+      setIsOpenLoginForm(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleGoogleLoginError = (err) => {
+    console.log(err);
   };
 
   return (
@@ -123,8 +143,8 @@ export default function LoginForm() {
             ลงชื่อเข้าใช้
           </Button>
           <GoogleLogin
-            onSuccess={() => console.log("Login success fulluy")}
-            onError={() => console.log("Login success errors")}
+            onSuccess={handleGoogleLoginSuccess}
+            onError={handleGoogleLoginError}
           />
           <div className="flex text-sm gap-2">
             <div className="text-gray-400">ยังไม่มีบัญชีผู้ใช้ ?</div>
