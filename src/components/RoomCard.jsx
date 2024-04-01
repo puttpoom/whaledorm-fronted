@@ -35,8 +35,7 @@ export default function RoomCard({
       case "CONFIRM":
         return (
           <p className="flex items-center gap-2">
-            การนัดหมายไดเรับการยืนยันแล้ว{" "}
-            <CheckSquare className="inline" size={18} />
+            ได้รับการยืนยันแล้ว <CheckSquare className="inline" size={18} />
           </p>
         );
       case "CANCLED":

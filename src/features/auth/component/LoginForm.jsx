@@ -14,6 +14,7 @@ import ErrorText from "../component/ErrorText";
 //middleWares
 import validateLogin from "../validations/validate-login";
 import MySwal from "../../../utills/sweetaleart";
+import { GoogleLogin } from "@react-oauth/google";
 
 const initial = {
   email: "",
@@ -26,8 +27,13 @@ export default function LoginForm() {
   const [error, setError] = useState({});
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const { login, setIsOpenLoginForm, isOpenLoginForm, setIsOpenRegisterForm } =
-    useAuth();
+  const {
+    login,
+    setIsOpenLoginForm,
+    isOpenLoginForm,
+    setIsOpenRegisterForm,
+    googleLogin,
+  } = useAuth();
 
   useEffect(() => {
     if (isOpenLoginForm) {
@@ -73,6 +79,21 @@ export default function LoginForm() {
 
   const handleShowPassword = (e) => {
     setIsShowPassword((prv) => !prv);
+  };
+
+  //when success google res token
+  const handleGoogleLoginSuccess = async (res) => {
+    try {
+      console.log(res);
+      await googleLogin(res);
+      setIsOpenLoginForm(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleGoogleLoginError = (err) => {
+    console.log(err);
   };
 
   return (
@@ -121,6 +142,10 @@ export default function LoginForm() {
           <Button color="blue" text="white" width="full">
             ลงชื่อเข้าใช้
           </Button>
+          <GoogleLogin
+            onSuccess={handleGoogleLoginSuccess}
+            onError={handleGoogleLoginError}
+          />
           <div className="flex text-sm gap-2">
             <div className="text-gray-400">ยังไม่มีบัญชีผู้ใช้ ?</div>
             <div
