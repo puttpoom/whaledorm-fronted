@@ -162,7 +162,6 @@ export default function AuthContextProvider({ children }) {
         setProfile,
         googleUser,
         setGoogleUser,
-        authUser,
         setAuthUser,
         googleToken,
         fetchGoogleAuth,
