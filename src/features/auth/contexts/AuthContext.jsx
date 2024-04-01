@@ -23,6 +23,28 @@ export default function AuthContextProvider({ children }) {
   const [isOpenRegisterForm, setIsOpenRegisterForm] = useState(false);
   const [isOpenLoginForm, setIsOpenLoginForm] = useState(false);
 
+  const fetchAuth = async () => {
+    if (getToken()) {
+      await authApi
+        .fetchMe()
+        .then((res) => {
+          setAuthUser(res.data.user);
+          console.log(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err.response?.data.message);
+          //toast.error(err.response?.data.message);
+        })
+        .finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoogleAuth(googleUser);
+  }, [googleToken]);
+
   const googleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       console.log(codeResponse, "codeResponse");
@@ -35,33 +57,12 @@ export default function AuthContextProvider({ children }) {
   });
 
   useEffect(() => {
-    fetchGoogleAuth(googleUser);
-  }, [googleToken]);
-
-  useEffect(() => {
     // //! Cannot async in useEffect but can  create asycfunc in useEffect
     // const fetch = async () => {
     //   const res = await authApi.fetchMe();
     // };
-    const fetchAuth = async () => {
-      if (getToken()) {
-        await authApi
-          .fetchMe()
-          .then((res) => {
-            setAuthUser(res.data.user);
-            console.log(res.data.user);
-          })
-          .catch((err) => {
-            console.log(err.response?.data.message);
-            //toast.error(err.response?.data.message);
-          })
-          .finally(() => setInitialLoading(false));
-      } else {
-        setInitialLoading(false);
-      }
-    };
     fetchAuth();
-  }, [initialLoading, googleToken]);
+  }, [initialLoading, googleUser]);
 
   const register = async (user) => {
     const res = await authApi.register(user);
@@ -123,13 +124,15 @@ export default function AuthContextProvider({ children }) {
         )
         .then(async (res) => {
           //decode token
-          console.log(res, "resssssssss");
-          setAuthUser(res.data);
           const resToken = await authApi.googleLogin(res.data);
           console.log(resToken, "010211020120120210021");
+          setAuthUser(resToken.data.user);
           storeToken(resToken.data.accessToken);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
     }
   };
 
