@@ -19,49 +19,49 @@ export default function DormFacilities() {
       </div>
       <div className="flex flow">
         <div className="grid grid-cols-2 gap-2 grid-flow-row p-4 w-full text-md items-center text-gray-800">
-          {dormFacilities.isKeyCard ? (
+          {dormFacilities?.isKeyCard ? (
             <span className={gap}>
               <CreditCard className="inline" size={22} />
               <span>คีย์การ์ด</span>
             </span>
           ) : null}
 
-          {dormFacilities.isLift ? (
+          {dormFacilities?.isLift ? (
             <span className={gap}>
               <SeparatorVertical className="inline" size={22} />
               <span>ลิฟท์</span>
             </span>
           ) : null}
 
-          {dormFacilities.isInternet ? (
+          {dormFacilities?.isInternet ? (
             <span className={gap}>
               <Wifi className="inline" size={22} />
               <span>อินเตอร์เน็ต</span>
             </span>
           ) : null}
 
-          {dormFacilities.isCCTV ? (
+          {dormFacilities?.isCCTV ? (
             <span className={gap}>
               <Cctv className="inline" size={22} />
               <span>กล้องวงจรปิด</span>
             </span>
           ) : null}
 
-          {dormFacilities.isLundary ? (
+          {dormFacilities?.isLundary ? (
             <span className={gap}>
               <WashingMachine className="inline" size={22} />
               <span>เครื่องซักผ้าหยอดเหรียญ</span>
             </span>
           ) : null}
 
-          {dormFacilities.isWaterDispenser ? (
+          {dormFacilities?.isWaterDispenser ? (
             <span className={gap}>
               <Droplets className="inline" size={22} />
               <span>ตู้กดน้ำหยอดเหรียญ</span>
             </span>
           ) : null}
 
-          {dormFacilities.isMart ? (
+          {dormFacilities?.isMart ? (
             <span className={gap}>
               <Store className="inline" size={22} />
               <span>ร้านขายของชำ</span>

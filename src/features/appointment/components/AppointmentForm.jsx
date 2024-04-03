@@ -8,6 +8,7 @@ import Carousel from "../../../components/Carousel";
 import GoogleMapDorm from "../../../components/GoogleMapDorm";
 import useRoom from "../../../hooks/use-room";
 import GoogleMapAppointment from "../../map/components/GoogleMapAppointment";
+import { useForm } from "react-hook-form";
 
 export default function AppointmentForm({ room }) {
   const navigate = useNavigate();
@@ -32,6 +33,12 @@ export default function AppointmentForm({ room }) {
   };
 
   const [input, setInput] = useState(initial);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({});
 
   const handleChangeInput = (e) => {
     // setError(initial);
@@ -61,7 +68,7 @@ export default function AppointmentForm({ room }) {
 
   return (
     <form onSubmit={handleSubmitForm} className="flex flex-row mt-6 gap-6">
-      <div className="rounded-xl w-full h-auto">
+      <div className="rounded-xl w-[50vw] h-auto">
         <img src="" alt="" />
         <GoogleMapAppointment dormId={dormId} />
         {/* <Carousel /> */}
@@ -70,17 +77,35 @@ export default function AppointmentForm({ room }) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             ชื่อหอพัก
-            <Input name="dormName" value={dormName} disabled={true} />
+            <Input
+              name="dormName"
+              value={dormName}
+              disabled={true}
+              register={register}
+              className="w-full"
+            />
           </div>
           <div>
             หมายเลขห้อง
-            <Input name="roomNumber" value={id} disabled={true} />
+            <Input
+              name="roomNumber"
+              value={id}
+              disabled={true}
+              register={register}
+              className="w-full"
+            />
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4">
           <div>
             รายละเอียดห้องพัก
-            <Input name="dormName" value={title} disabled={true} />
+            <Input
+              name="dormName"
+              value={title}
+              disabled={true}
+              register={register}
+              className="w-full"
+            />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -90,6 +115,8 @@ export default function AppointmentForm({ room }) {
               name="fullName"
               value={input.name}
               onChange={handleChangeInput}
+              register={register}
+              className="w-full"
             />
           </div>
           <div>
@@ -100,6 +127,8 @@ export default function AppointmentForm({ room }) {
               max={10}
               value={input.phone}
               onChange={handleChangeInput}
+              register={register}
+              className="w-full"
             />
           </div>
         </div>
@@ -111,6 +140,8 @@ export default function AppointmentForm({ room }) {
               type="date"
               value={input.date}
               onChange={handleChangeInput}
+              register={register}
+              className="w-full"
             />
             {/* <Datetime /> */}
           </div>
@@ -121,6 +152,8 @@ export default function AppointmentForm({ room }) {
               type="time"
               value={input.time}
               onChange={handleChangeInput}
+              register={register}
+              className="w-full"
             />
           </div>
         </div>
