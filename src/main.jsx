@@ -6,15 +6,18 @@ import AppointmentContextProvider from "./features/appointment/contexts/Appointm
 import RoomContextProvider from "./features/room/contexts/RoomContext.jsx";
 import GoogleMapContextProvider from "./features/map/contexts/GoogleMapContext.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import DormContextProvider from "./features/dorm/contexts/DormContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId="427204996136-m56284arl4oousd3f2pnhhs4iihdffgr.apps.googleusercontent.com">
     <AuthContextProvider>
       <AppointmentContextProvider>
         <GoogleMapContextProvider>
-          <RoomContextProvider>
-            <App />
-          </RoomContextProvider>
+          <DormContextProvider>
+            <RoomContextProvider>
+              <App />
+            </RoomContextProvider>
+          </DormContextProvider>
         </GoogleMapContextProvider>
       </AppointmentContextProvider>
     </AuthContextProvider>
