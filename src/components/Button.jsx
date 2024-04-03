@@ -21,8 +21,8 @@ const textSizeClasses = {
 };
 
 const Button = ({
+  buttonType,
   className,
-  type,
   color,
   textColor,
   width,
@@ -32,10 +32,11 @@ const Button = ({
   onClick,
   textSize,
 }) => {
+  // console.log(type);
   return (
     <>
       <button
-        type={type}
+        type={buttonType}
         className={`${className} ${bgClasses[color]} ${textClasses[textColor]} ${outline} w-${width} ${textSizeClasses[textSize]} text-md font-semibold rounded-md py-2.5 px-4 text-${text} flex justify-center gap-1 flex-1 items-center`}
         onClick={onClick}
       >

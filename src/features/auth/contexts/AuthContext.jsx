@@ -5,8 +5,6 @@ import {
   storeToken,
   clearToken,
 } from "../../../utills/local-storage";
-import MySwal from "../../../utills/sweetaleart";
-
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
@@ -16,31 +14,32 @@ export default function AuthContextProvider({ children }) {
   const [isOpenRegisterForm, setIsOpenRegisterForm] = useState(false);
   const [isOpenLoginForm, setIsOpenLoginForm] = useState(false);
 
+  const fetchAuth = async () => {
+    if (getToken()) {
+      await authApi
+        .fetchMe()
+        .then((res) => {
+          setAuthUser(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err.response?.data.message);
+          //toast.error(err.response?.data.message);
+        })
+        .finally(() => setInitialLoading(false));
+    } else {
+      setInitialLoading(false);
+    }
+  };
+
   useEffect(() => {
     // //! Cannot async in useEffect but can  create asycfunc in useEffect
     // const fetch = async () => {
     //   const res = await authApi.fetchMe();
     // };
-    const fetchAuth = async () => {
-      if (getToken()) {
-        await authApi
-          .fetchMe()
-          .then((res) => {
-            setAuthUser(res.data.user);
-          })
-          .catch((err) => {
-            console.log(err.response?.data.message);
-            //toast.error(err.response?.data.message);
-          })
-          .finally(() => setInitialLoading(false));
-      } else {
-        setInitialLoading(false);
-      }
-    };
     fetchAuth();
   }, []);
 
-  const register = async (user) => {
+  const registerAcc = async (user) => {
     const res = await authApi.register(user);
     setAuthUser(res.data.newUser);
     console.log(res.data.newUser);
@@ -86,7 +85,7 @@ export default function AuthContextProvider({ children }) {
     <AuthContext.Provider
       value={{
         authUser,
-        register,
+        registerAcc,
         login,
         logout,
         initialLoading,
@@ -94,6 +93,7 @@ export default function AuthContextProvider({ children }) {
         setIsOpenRegisterForm,
         isOpenLoginForm,
         setIsOpenLoginForm,
+        fetchAuth,
       }}
     >
       {children}

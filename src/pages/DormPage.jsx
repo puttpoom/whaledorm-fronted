@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DormRegisterForm from "../features/dorm/components/DormRegisterForm";
 import useAuth from "../hooks/use-auth";
 import MySwal from "../utills/sweetaleart";
+import DormCreateRoomForm from "../features/dorm/components/DormCreateRoomForm";
 
 export default function DormPage() {
   const { authUser } = useAuth();
@@ -16,11 +17,5 @@ export default function DormPage() {
       timer: 5 * 1000,
     });
   }
-
-  console.log(authUser.dorms);
-  return (
-    <>
-      <DormRegisterForm />
-    </>
-  );
+  return <>{authUser.dorms ? <DormCreateRoomForm /> : <DormRegisterForm />}</>;
 }
