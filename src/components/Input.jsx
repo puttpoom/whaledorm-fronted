@@ -15,7 +15,7 @@ export default function Input({
       <input
         {...register(name)}
         max={max}
-        name={name}
+        // name={name}
         value={value}
         type={type}
         placeholder={placeholder}
@@ -23,9 +23,9 @@ export default function Input({
         onChange={onChange}
         disabled={disabled}
       />
-      {errors[name] && (
-        <p className="text-red-500 text-sm">{errors[name]?.message}</p>
-      )}
+      {errors?.[name] ? (
+        <p className="text-red-500 text-sm">{errors?.[name].message}</p>
+      ) : null}
     </>
   );
 }
