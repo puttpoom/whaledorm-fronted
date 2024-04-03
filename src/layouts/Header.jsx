@@ -61,13 +61,16 @@ export default function Header() {
           {authUser ? (
             <div className="flex text-blue-900 items-center gap-2">
               สวัสดีคุณ
-              <span className="font-semibold">{authUser.firstName}</span>
+              <span className="font-semibold">
+                {authUser.firstName || authUser.given_name}
+              </span>
               <Link to="/" role="button" onClick={(e) => logout()}>
                 <LogOut size={20} />
               </Link>
             </div>
           ) : (
             <Button
+              type="button"
               className="flex"
               color="blue"
               textColor="white"

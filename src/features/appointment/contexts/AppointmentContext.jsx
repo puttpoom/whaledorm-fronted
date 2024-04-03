@@ -7,7 +7,7 @@ import MySwal from "../../../utills/sweetaleart";
 import useAuth from "../../../hooks/use-auth";
 
 const initialRoom = {
-  id: 1,
+  id: null,
   title: "",
   info: "",
   roomImages:
@@ -27,42 +27,27 @@ export default function AppointmentContextProvider({ children }) {
   // console.log(targetRoomId, "targetRoomId");
 
   const [roomTarget, setRoomTarget] = useState(initialRoom);
-  const [appointments, setAppointment] = useState([]);
   const [userAppointments, setUserAppointments] = useState([]);
   const [dormAppointments, setDormAppointments] = useState([]);
+  const [updateAppointmentData, setUpdateAppointmentData] = useState({});
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    const fetchRoomByRoomId = async () => {
-      try {
-        const res = await roomApi.getRoomByRoomId(targetRoomId);
-        setRoomTarget(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRoomByRoomId();
-    setInitialLoading(false);
-  }, [targetRoomId]);
-
-  useEffect(() => {
-    if (authUser.role === "DORM") {
-      const fetchDormAppointmentById = async () => {
+    if (targetRoomId) {
+      const fetchRoomByRoomId = async () => {
         try {
-          const res = await appointmentApi.getAllAppointmentByDormId(
-            authUser.dorms.id
-          );
-          console.log(res.data);
-          setDormAppointments(res.data);
+          const res = await roomApi.getRoomByRoomId(targetRoomId);
+          setRoomTarget(res.data);
+          // console.log(res.data);
         } catch (err) {
           console.log(err);
+        } finally {
+          setInitialLoading(false);
         }
       };
-      fetchDormAppointmentById();
-      setInitialLoading(false);
+      fetchRoomByRoomId();
     }
-  }, [authUser.role]);
+  }, [targetRoomId]);
 
   useEffect(() => {
     const fetchUserAppointments = async () => {
@@ -131,6 +116,18 @@ export default function AppointmentContextProvider({ children }) {
     const res = await appointmentApi.dormUpdateAppointment(appointmentId);
   };
 
+  const updateAppointment = async (appointmentId, updatedaAppointmentData) => {
+    const res = await appointmentApi.dormUpdateAppointment(
+      appointmentId,
+      updatedaAppointmentData
+    );
+    setUpdateAppointmentData(
+      dormAppointments.map((app) =>
+        app.id === appointmentId ? { ...app, ...updatedaAppointmentData } : app
+      )
+    );
+  };
+
   const handleClickResponBtn = async (
     appointmentId,
     // appointmentData,
@@ -138,7 +135,7 @@ export default function AppointmentContextProvider({ children }) {
   ) => {
     MySwal.fire({
       title: "คุณแน่ใจหรือไม่?",
-      text: `ยืนยันการนัดหมาย`,
+      text: ``,
       icon: "warning",
       showDenyButton: true,
       showCancelButton: true,
@@ -150,24 +147,17 @@ export default function AppointmentContextProvider({ children }) {
       denyButtonText: "ยกเลิกการนัดหมาย",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await appointmentApi.dormUpdateAppointment(
-          appointmentId,
-          updatedaAppointmentData
-        );
-        setDormAppointments(
-          dormAppointments.map((app) =>
-            app.id === appointmentId
-              ? { ...app, ...updatedaAppointmentData }
-              : app
-          )
-        );
+        updateAppointment(appointmentId, updatedaAppointmentData);
         MySwal.fire({
           title: "ยืนยันการนัดหมาย!",
-          // text: "Your file has been deleted.",
           icon: "success",
         });
       } else if (result.isDenied) {
-        console.log("deny");
+        updateAppointment(appointmentId, updatedaAppointmentData);
+        MySwal.fire({
+          title: "ยกเลิกการนัดหมาย!",
+          icon: "error",
+        });
       }
     });
   };
@@ -180,11 +170,11 @@ export default function AppointmentContextProvider({ children }) {
         userDeleteAppointment,
         initialLoading,
         targetRoomId,
-        appointments,
         dormAppointments,
         userAppointments,
         dormUpdateAppointment,
         handleClickResponBtn,
+        updateAppointmentData,
       }}
     >
       {children}

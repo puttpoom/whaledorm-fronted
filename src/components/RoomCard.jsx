@@ -35,8 +35,7 @@ export default function RoomCard({
       case "CONFIRM":
         return (
           <p className="flex items-center gap-2">
-            การนัดหมายไดเรับการยืนยันแล้ว{" "}
-            <CheckSquare className="inline" size={18} />
+            ได้รับการยืนยันแล้ว <CheckSquare className="inline" size={18} />
           </p>
         );
       case "CANCLED":
@@ -83,7 +82,7 @@ export default function RoomCard({
         </span>
         <span className="flex w-full justify-start gap-2 items-center">
           {isShowBookBtn ? (
-            <Link to={`/dorm/rooms/appointment/${rooms.id}`}>
+            <Link to={`/appointment/${rooms.id}`}>
               <Button
                 color="bookBtn"
                 text="white"

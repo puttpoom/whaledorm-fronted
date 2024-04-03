@@ -7,19 +7,17 @@ import useAuth from "../../../hooks/use-auth";
 import Carousel from "../../../components/Carousel";
 import GoogleMapDorm from "../../../components/GoogleMapDorm";
 import useRoom from "../../../hooks/use-room";
+import GoogleMapAppointment from "../../map/components/GoogleMapAppointment";
 
-export default function AppointmentForm() {
+export default function AppointmentForm({ room }) {
   const navigate = useNavigate();
   const { authUser } = useAuth();
   const { userCreateAppointment, roomTarget } = useAppointment();
-  const { latLong } = useRoom();
-  console.log(latLong);
 
   const { dorm } = roomTarget;
   const dormName = dorm && dorm.dormName;
   const dormId = dorm && dorm.id;
-
-  console.log(dorm);
+  console.log(dormId, "dormIaaaaaad");
 
   const { id } = roomTarget;
   const { title } = roomTarget;
@@ -65,7 +63,7 @@ export default function AppointmentForm() {
     <form onSubmit={handleSubmitForm} className="flex flex-row mt-6 gap-6">
       <div className="rounded-xl w-full h-auto">
         <img src="" alt="" />
-        <GoogleMapDorm latLong2={latLong} zoom={18} />
+        <GoogleMapAppointment dormId={dormId} />
         {/* <Carousel /> */}
       </div>
       <div className="flex flex-col gap-4">

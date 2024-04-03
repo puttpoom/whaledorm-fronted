@@ -15,7 +15,7 @@ const mockData = {
 
 export default function DormTitle() {
   const { dormRoom } = useRoom();
-  console.log(dormRoom);
+  // console.log(dormRoom);
   return (
     <div className="flex flex-col gap-2">
       <div className="text-[24px] font-semibold flex gap-2 items-center">

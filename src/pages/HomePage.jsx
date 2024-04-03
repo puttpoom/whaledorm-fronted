@@ -11,13 +11,11 @@ export default function HomePage() {
         <RoomContextProvider>
           <div className="flex flex-col text-5xl font-bold text-center pt-12 py-8 gap-4">
             <div>
-              <span>
+              {/* <span>
                 ค้นหาหอพัก <span className="text-[#1A8E10]">“ที่ว่างอยู่”</span>{" "}
-                บริเวณ
-              </span>
-            </div>
-            <div>
-              <span>โดยรอบมหาวิทยาลัย</span>
+                บริเวณ <br />
+                โดยรอบมหาวิทยาลัย
+              </span> */}
             </div>
           </div>
           <div className="w-[60vw] mx-auto">

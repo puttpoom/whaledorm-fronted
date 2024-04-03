@@ -22,8 +22,18 @@ const route = createBrowserRouter([
         path: "dorm/rooms/:targetDormId",
         element: <DormRoomPage />,
       },
+      // {
+      //   path: "dorm/rooms/appointment/:targetRoomId",
+      //   element: <AppointmetPage />,
+      // },
+    ],
+  },
+  {
+    path: "/appointment",
+    element: <Container />,
+    children: [
       {
-        path: "dorm/rooms/appointment/:targetRoomId",
+        path: ":targetRoomId",
         element: <AppointmetPage />,
       },
     ],

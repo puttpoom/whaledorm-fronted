@@ -1,16 +1,37 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import AppointmentItem from "./AppointmentItem";
-import { AppointmentContext } from "../contexts/AppointmentContext";
 import useAuth from "../../../hooks/use-auth";
+import * as appointmentApi from "../../../api/appointment";
+import useAppointment from "../../../hooks/use-appointment";
 
 export default function DormAppointmentContainer() {
   const { authUser } = useAuth();
-  const { dormAppointments } = useContext(AppointmentContext);
-  console.log(dormAppointments);
+  const { updateAppointmentData } = useAppointment();
+  const [dormAppointments, setDormAppointments] = useState([]);
+  console.log(authUser, "adadasdwdascacawsasdqwascawdasdwdasdawdacawdasd");
+
+  useEffect(() => {
+    if (authUser.role === "DORM") {
+      const fetchDormAppointmentById = async () => {
+        try {
+          const res = await appointmentApi.getAllAppointmentByDormId(
+            authUser.dorms.id
+          );
+          // console.log(res.data);
+          setDormAppointments(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchDormAppointmentById();
+      // setInitialLoading(false);
+    }
+  }, [updateAppointmentData]);
+
   return (
     <div className="bg-[#F1F5F9] px-20 h-content overflow-auto pb-8">
       <div className="flex flex-col">
-        <div className="text-2xl font-semibold pt-12 pb-2">{`รายการนัดหมายทั้งหมดของหอพัก ${authUser.dorms.dormName}`}</div>
+        <div className="text-2xl font-semibold pt-12 pb-2">{`รายการนัดหมายทั้งหมดของหอพัก ${authUser?.dorms?.dormName}`}</div>
         <div className="bg-white rounded-lg p-4">
           <div class="overflow-x-auto">
             <table class="table-auto w-full">
