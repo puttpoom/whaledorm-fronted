@@ -6,6 +6,7 @@ import {
   storeToken,
   clearToken,
 } from "../../../utills/local-storage";
+
 import MySwal from "../../../utills/sweetaleart";
 import axios from "axios";
 
@@ -64,7 +65,7 @@ export default function AuthContextProvider({ children }) {
     fetchAuth();
   }, [initialLoading, googleUser]);
 
-  const register = async (user) => {
+  const registerAcc = async (user) => {
     const res = await authApi.register(user);
     setAuthUser(res.data.newUser);
     console.log(res.data.newUser);
@@ -152,7 +153,7 @@ export default function AuthContextProvider({ children }) {
     <AuthContext.Provider
       value={{
         authUser,
-        register,
+        registerAcc,
         login,
         logout,
         initialLoading,
@@ -160,6 +161,7 @@ export default function AuthContextProvider({ children }) {
         setIsOpenRegisterForm,
         isOpenLoginForm,
         setIsOpenLoginForm,
+        fetchAuth,
         googleLogin,
         profile,
         setProfile,

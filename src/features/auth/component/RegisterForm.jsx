@@ -13,6 +13,7 @@ import { useEffect, useState, useRef } from "react";
 
 //hook
 import useAuth from "../../../hooks/use-auth";
+import { useForm } from "react-hook-form";
 
 const initial = {
   email: "",
@@ -29,11 +30,17 @@ export default function RegisterForm() {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const {
-    register,
+    registerAcc,
     isOpenRegisterForm,
     setIsOpenRegisterForm,
     setIsOpenLoginForm,
   } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({});
 
   useEffect(() => {
     if (isOpenRegisterForm) {
@@ -61,7 +68,7 @@ export default function RegisterForm() {
         return setError(validateError);
       }
 
-      await register(input);
+      await registerAcc(input);
     } catch (error) {
       console.log(error);
       if (error.response?.data.message === "EMAIL_IN_USE") {
@@ -96,6 +103,8 @@ export default function RegisterForm() {
             <div>
               <span>ชื่อ</span>
               <Input
+                className="w-full"
+                register={register}
                 name="firstName"
                 onChange={handleChangeInput}
                 value={input.firstName}
@@ -105,6 +114,8 @@ export default function RegisterForm() {
             <div>
               <span>นามสกุล</span>
               <Input
+                className="w-full"
+                register={register}
                 name="lastName"
                 onChange={handleChangeInput}
                 value={input.lastName}
@@ -115,6 +126,8 @@ export default function RegisterForm() {
           <div>
             <span>อีเมล</span>
             <Input
+              className="w-full"
+              register={register}
               name="email"
               value={input.email}
               placeholder="example@email.com"
@@ -129,6 +142,8 @@ export default function RegisterForm() {
             </div>
             <div className="relative">
               <Input
+                className="w-full"
+                register={register}
                 name="password"
                 type={isShowPassword ? "text" : "password"}
                 value={input.password}

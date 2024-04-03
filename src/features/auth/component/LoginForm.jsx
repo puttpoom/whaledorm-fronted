@@ -14,6 +14,7 @@ import ErrorText from "../component/ErrorText";
 //middleWares
 import validateLogin from "../validations/validate-login";
 import MySwal from "../../../utills/sweetaleart";
+import { useForm } from "react-hook-form";
 import { GoogleLogin } from "@react-oauth/google";
 
 const initial = {
@@ -77,6 +78,15 @@ export default function LoginForm() {
     }
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    // resolver: joiResolver(registerDormSchema),
+    // mode: "onSubmit",
+  });
+
   const handleShowPassword = (e) => {
     setIsShowPassword((prv) => !prv);
   };
@@ -109,6 +119,8 @@ export default function LoginForm() {
         <div>
           <span>อีเมล</span>
           <Input
+            className="w-full"
+            register={register}
             onChange={handleChangeInput}
             name="email"
             placeholder="example@email.com"
@@ -122,6 +134,8 @@ export default function LoginForm() {
           </div>
           <div className="relative">
             <Input
+              className="w-full"
+              register={register}
               onChange={handleChangeInput}
               name="password"
               placeholder="Enter your Password"

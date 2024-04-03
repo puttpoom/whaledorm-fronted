@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import * as dormApi from "../../../api/dorm";
 import Spinner from "../../../components/Spinner";
+import MySwal from "../../../utills/sweetaleart";
+import useAuth from "../../../hooks/use-auth";
 
 export const DormContext = createContext();
 
@@ -32,36 +34,51 @@ const initialRoom = {
 };
 
 export default function DormContextProvider({ children }) {
+  const { fetchAuth } = useAuth();
   const [vacantDorms, setVacantDorms] = useState([]);
-  const [registeredDorm, setRegisteredDorm] = useState(initialDorm);
+  const [registerDormLoading, setRegisterDormLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
 
+  const fetchAllVacantRoom = async () => {
+    try {
+      const res = await dormApi.getAllVacantDorm();
+      setVacantDorms(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchAllVacantRoom = async () => {
-      try {
-        const res = await dormApi.getAllVacantDorm();
-        setVacantDorms(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    fetchAuth();
+  }, [registerDormLoading]);
+
+  useEffect(() => {
     fetchAllVacantRoom();
     setInitialLoading(false);
   }, [initialLoading]);
 
-  const registerDorm = async (dorm) => {
-    const res = await dormApi.registerDorm(dorm);
-    setRegisteredDorm(res.data.newDorm);
-    console.log(res.data.newDorm);
-    storeToken(res.data.accessToken);
+  const registerDorm = async (dormInfo, dormFacilities) => {
+    console.log(dormInfo, "dormInfo");
+    console.log(dormFacilities, "dormFacilities");
+    try {
+      const dormData = { dorm: dormInfo, dormFacilities };
+      const res = await dormApi.registerDorm(dormData);
+      console.log(res, "res dormData");
 
-    MySwal.fire({
-      position: "center",
-      icon: "success",
-      title: "ลงทะเบียนหอพักสำเร็จ",
-      showConfirmButton: false,
-      timer: 2000,
-    });
+      await MySwal.fire({
+        position: "center",
+        icon: "success",
+        title: "ลงทะเบียนหอพักสำเร็จ",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+
+      window.location.reload();
+    } catch (err) {
+      console.log(err, "error");
+    } finally {
+      setRegisterDormLoading(false);
+    }
   };
 
   const calculateMinPrice = (rooms) => {
@@ -91,7 +108,7 @@ export default function DormContextProvider({ children }) {
     <DormContext.Provider
       value={{
         vacantDorms,
-        registeredDorm,
+        registerDormLoading,
         registerDorm,
         calculateMinPrice,
         calculateMaxPrice,

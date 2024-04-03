@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import CreateRoomForm from "../features/dorm/components/CreateRoomForm";
-// import useDorm from "../hooks/use-dorm";
+import DormRegisterForm from "../features/dorm/components/DormRegisterForm";
 import useAuth from "../hooks/use-auth";
 import MySwal from "../utills/sweetaleart";
+import DormCreateRoomForm from "../features/dorm/components/DormCreateRoomForm";
 
 export default function DormPage() {
   const { authUser } = useAuth();
@@ -17,12 +17,5 @@ export default function DormPage() {
       timer: 5 * 1000,
     });
   }
-
-  console.log(authUser.dorms);
-  return (
-    <>
-      {authUser.dorms ? <p>registerd dorm</p> : <p>un registered dorm</p>}
-      <CreateRoomForm />
-    </>
-  );
+  return <>{authUser.dorms ? <DormCreateRoomForm /> : <DormRegisterForm />}</>;
 }
