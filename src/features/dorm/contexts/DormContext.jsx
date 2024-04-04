@@ -34,7 +34,7 @@ const initialRoom = {
 };
 
 export default function DormContextProvider({ children }) {
-  const { fetchAuth } = useAuth();
+  // const { fetchAuth } = useAuth();
   const [vacantDorms, setVacantDorms] = useState([]);
   const [registerDormLoading, setRegisterDormLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -48,14 +48,14 @@ export default function DormContextProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    fetchAuth();
-  }, [registerDormLoading]);
+  // useEffect(() => {
+  //   fetchAuth();
+  // }, [registerDormLoading]);
 
   useEffect(() => {
     fetchAllVacantRoom();
     setInitialLoading(false);
-  }, [initialLoading]);
+  }, []);
 
   const registerDorm = async (dormInfo, dormFacilities) => {
     console.log(dormInfo, "dormInfo");

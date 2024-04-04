@@ -9,6 +9,7 @@ import {
 
 import MySwal from "../../../utills/sweetaleart";
 import axios from "axios";
+import { set } from "react-hook-form";
 
 export const AuthContext = createContext();
 
@@ -33,10 +34,10 @@ export default function AuthContextProvider({ children }) {
           console.log(res.data.user);
         })
         .catch((err) => {
-          console.log(err.response?.data.message);
+          console.log(err);
+          console.log(err?.response?.data.message);
           //toast.error(err.response?.data.message);
-        })
-        .finally(() => setInitialLoading(false));
+        });
     } else {
       setInitialLoading(false);
     }
@@ -44,18 +45,22 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     fetchGoogleAuth(googleUser);
+    setInitialLoading(false);
   }, [googleToken]);
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: async (codeResponse) => {
-      console.log(codeResponse, "codeResponse");
-      setGoogleUser(codeResponse);
-      const token = await authApi.googleLogin(codeResponse);
-      setGoogleToken(token);
-      console.log("google login successfully");
+  const googleLogin = useGoogleLogin(
+    {
+      onSuccess: async (codeResponse) => {
+        console.log(codeResponse, "codeResponse");
+        setGoogleUser(codeResponse);
+        const token = await authApi.googleLogin(codeResponse);
+        setGoogleToken(token);
+        console.log("google login successfully");
+      },
+      onError: (error) => console.log("Login Failed:", error),
     },
-    onError: (error) => console.log("Login Failed:", error),
-  });
+    []
+  );
 
   useEffect(() => {
     // //! Cannot async in useEffect but can  create asycfunc in useEffect
@@ -63,7 +68,7 @@ export default function AuthContextProvider({ children }) {
     //   const res = await authApi.fetchMe();
     // };
     fetchAuth();
-  }, [initialLoading, googleUser]);
+  }, []);
 
   const registerAcc = async (user) => {
     const res = await authApi.register(user);

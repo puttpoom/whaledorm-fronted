@@ -50,19 +50,21 @@ export default function AppointmentContextProvider({ children }) {
   }, [targetRoomId]);
 
   useEffect(() => {
-    const fetchUserAppointments = async () => {
-      try {
-        const res = await appointmentApi.getUserAppointmentsByUserId(
-          authUser.id
-        );
-        // console.log(res.data);
-        setUserAppointments([...res.data]);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserAppointments();
-    setInitialLoading(false);
+    if (authUser.role === "USER") {
+      const fetchUserAppointments = async () => {
+        try {
+          const res = await appointmentApi.getUserAppointmentsByUserId(
+            authUser.id
+          );
+          // console.log(res.data);
+          setUserAppointments([...res.data]);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchUserAppointments();
+      setInitialLoading(false);
+    }
   }, [authUser.id]);
 
   const userCreateAppointment = async (appointment) => {
@@ -112,6 +114,13 @@ export default function AppointmentContextProvider({ children }) {
     });
   };
 
+  const dormDeleteAppointment = async (appointmentId) => {
+    const res = await appointmentApi.dormDeleteAppointment(appointmentId);
+    setDormAppointments(
+      dormAppointments.filter((app) => app.id !== appointmentId)
+    );
+  };
+
   const dormUpdateAppointment = async (appointmentId) => {
     const res = await appointmentApi.dormUpdateAppointment(appointmentId);
   };
@@ -139,6 +148,8 @@ export default function AppointmentContextProvider({ children }) {
       icon: "warning",
       showDenyButton: true,
       showCancelButton: true,
+      showConfirmButton: true,
+      showCloseButton: true,
       // denyButtonText: "#d33",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#808080",
@@ -147,13 +158,13 @@ export default function AppointmentContextProvider({ children }) {
       denyButtonText: "ยกเลิกการนัดหมาย",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        updateAppointment(appointmentId, updatedaAppointmentData);
+        updateAppointment(appointmentId, { appointmentStatus: "CONFIRM" });
         MySwal.fire({
           title: "ยืนยันการนัดหมาย!",
           icon: "success",
         });
       } else if (result.isDenied) {
-        updateAppointment(appointmentId, updatedaAppointmentData);
+        updateAppointment(appointmentId, { appointmentStatus: "CANCLED" });
         MySwal.fire({
           title: "ยกเลิกการนัดหมาย!",
           icon: "error",
